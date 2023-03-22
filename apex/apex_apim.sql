@@ -28,7 +28,7 @@ prompt APPLICATION 105 - Api Management
 -- Application Export:
 --   Application:     105
 --   Name:            Api Management
---   Date and Time:   15:42 Tuesday March 21, 2023
+--   Date and Time:   07:57 Wednesday March 22, 2023
 --   Exported By:     OCI_API_PORTAL
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -115,7 +115,7 @@ wwv_flow_imp.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'ApiMgt'
 ,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_upd_yyyymmddhh24miss=>'20230321154213'
+,p_last_upd_yyyymmddhh24miss=>'20230322075703'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>22
 ,p_print_server_type=>'NATIVE'
@@ -20057,6 +20057,14 @@ wwv_flow_imp_shared.create_install_script(
 '',
 'ALTER TRIGGER "SPECIFICATION_TRIGGER" ENABLE;',
 '',
+'CREATE OR REPLACE FORCE EDITIONABLE VIEW "TAG_VIEW" ("IMPL_ID", "LIST_TAG_NV") AS ',
+'  select ti.impl_id impl_id, LISTAGG(tag.tag_nv, '','') list_tag_nv ',
+'from tag_impl ti, ',
+'     (select tag_id, tag_name||''=''||tag_value tag_nv from tag) tag',
+' where ti.tag_id = tag.tag_id',
+' group by ti.impl_id;',
+' ',
+'',
 'CREATE OR REPLACE FORCE EDITIONABLE VIEW "IMPL_VIEW" ("IMPL_ID", "IMPL_ICON_URL", "IMPL_NAME", "IMPL_SOURCE_TYPE", "IMPL_SOURCE_URL", "IMPL_VERSION", "RUNTIME_CONSOLE", "API_ID", "API_NAME", "API_DESCRIPTION", "API_AUTHOR", "SPEC_ID", "SPEC_TYPE", "S'
 ||'PEC_NAME", "SPEC_VERSION", "SPEC_SOURCE_TYPE", "SPEC_SOURCE_URL", "ENDPOINT_ID", "ENDPOINT_URL", "ENDPOINT_SOURCE_TYPE", "ENDPOINT_SOURCE_URL", "TI_LIST_TAG_NV") AS ',
 '  select impl.impl_id impl_id, impl.icon_url impl_icon_url, impl.name impl_name, impl.source_type impl_source_type, impl.source_url impl_source_url, impl.VERSION impl_version, impl.runtime_console runtime_console,',
@@ -20074,12 +20082,6 @@ wwv_flow_imp_shared.create_install_script(
 '  and endpoint.impl_id = impl.impl_id ',
 '  and tv.impl_id(+) = impl.impl_id;',
 '',
-'CREATE OR REPLACE FORCE EDITIONABLE VIEW "TAG_VIEW" ("IMPL_ID", "LIST_TAG_NV") AS ',
-'  select ti.impl_id impl_id, LISTAGG(tag.tag_nv, '','') list_tag_nv ',
-'from tag_impl ti, ',
-'     (select tag_id, tag_name||''=''||tag_value tag_nv from tag) tag',
-' where ti.tag_id = tag.tag_id',
-' group by ti.impl_id;',
 '',
 ''))
 );
