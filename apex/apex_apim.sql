@@ -28,7 +28,7 @@ prompt APPLICATION 105 - Api Management
 -- Application Export:
 --   Application:     105
 --   Name:            Api Management
---   Date and Time:   10:52 Wednesday March 22, 2023
+--   Date and Time:   20:12 Thursday March 23, 2023
 --   Exported By:     OCI_API_PORTAL
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -115,7 +115,7 @@ wwv_flow_imp.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'ApiMgt'
 ,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_upd_yyyymmddhh24miss=>'20230322105221'
+,p_last_upd_yyyymmddhh24miss=>'20230323201205'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>22
 ,p_print_server_type=>'NATIVE'
@@ -20688,16 +20688,16 @@ wwv_flow_imp_shared.create_install_script(
 '    p_items_per_page => 0);',
 '  ORDS.define_template(',
 '   p_module_name    => ''rest'',',
-'   p_pattern        => ''add_api/'');',
+'   p_pattern        => ''add_api'');',
 '  ORDS.define_handler(',
 '    p_module_name    => ''rest'',',
-'    p_pattern        => ''add_api/'',',
+'    p_pattern        => ''add_api'',',
 '    p_method         => ''GET'',',
 '    p_source_type    => ORDS.source_type_plsql,',
 '    p_source         => ',
 '''begin ',
-'  api_harvest.add_api( :git_repo_url, :git_branch, :impl_name, ',
-'             :icon_url, :impl_git_path, :runtime_url, :version,',
+'  api_harvest.add_api( :git_repo_url, :impl_name, ',
+'             :icon_url, :impl_git_path, :runtime_console, :version,',
 '             :endpoint_url, :endpoint_git_path, :spec_git_path, :spec_type, :tags );',
 'end;'');',
 'end;'))
