@@ -28,7 +28,7 @@ prompt APPLICATION 105 - Api Management
 -- Application Export:
 --   Application:     105
 --   Name:            Api Management
---   Date and Time:   09:01 Saturday March 25, 2023
+--   Date and Time:   16:52 Saturday March 25, 2023
 --   Exported By:     OCI_API_PORTAL
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -115,7 +115,7 @@ wwv_flow_imp.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'ApiMgt'
 ,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_upd_yyyymmddhh24miss=>'20230325090112'
+,p_last_upd_yyyymmddhh24miss=>'20230325165236'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>22
 ,p_print_server_type=>'NATIVE'
@@ -20089,7 +20089,7 @@ wwv_flow_imp_shared.create_install_script(
 '       INSERT INTO HARVEST(start_time, source_id) VALUES (SYSDATE, rec.source_id ) returning harvest_id into m_harvest_id;',
 '       if rec.source_type=''OIC'' then',
 '         harvest_oic( rec.OIC_HOST );',
-'       elsif rec.source_type=''OCI Api Gateway'' then',
+'       elsif rec.source_type=''OCI API Gateway'' then',
 '         harvest_apigw( rec.COMPARTMENT_OCID );',
 '       else   ',
 '         log( ''Unknown source_type='' || rec.SOURCE_TYPE ); ',
@@ -20285,9 +20285,9 @@ wwv_flow_imp_shared.create_install_script(
 '                spec_source_url :=  impl_source_url || tags.get_string(''api_git_spec_path'');',
 '                icon_url := tags.get_string(''api_icon'');',
 '                name := INITCAP( items(i).display_name );',
-'                impl_source_type := ''OCI Api Gateway'';',
-'                endpoint_source_type := ''OCI Api Gateway'';',
-'                spec_source_type := ''OCI Api Gateway'';',
+'                impl_source_type := ''OCI API Gateway'';',
+'                endpoint_source_type := ''OCI API Gateway'';',
+'                spec_source_type := ''OCI API Gateway'';',
 '                endpoint_url := items(i).endpoint || ''/'' || api_endpoint_url;',
 '                spec_type := tags.get_string(''api_git_spec_type'');',
 '                version := '''';',
@@ -20381,7 +20381,7 @@ wwv_flow_imp_shared.create_install_script(
 '    end if;    ',
 '',
 '    if runtime_console is not null and REGEXP_INSTR( runtime_console, ''api-gateway'' )!=0 then',
-'        impl_source_type := ''OCI Api Gateway'';',
+'        impl_source_type := ''OCI API Gateway'';',
 '    end if;    ',
 '',
 '    log( ''name='' || impl_name || ''/ icon_url='' || icon_url  || '' / impl_source_type='' || impl_source_type || '' / tags='' || tags );  ',
