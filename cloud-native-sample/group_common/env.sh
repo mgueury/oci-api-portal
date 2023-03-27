@@ -16,7 +16,7 @@ else
   # TF_VAR_license_model : BRING_YOUR_OWN_LICENSE or LICENSE_INCLUDED
   export TF_VAR_license_model=BRING_YOUR_OWN_LICENSE
 
-  export APIM_HOST=ohgfmjcmy0d6yut-mgatp.adb.eu-frankfurt-1.oraclecloudapps.com
+  export APIM_HOST=xxxxxxxxx-apidb.adb.eu-frankfurt-1.oraclecloudapps.com
   # Landing Zone
   # export TF_VAR_lz_appdev_cmp_ocid=$TF_VAR_compartment_ocid
   # export TF_VAR_lz_database_cmp_ocid=$TF_VAR_compartment_ocid
