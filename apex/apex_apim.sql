@@ -28,7 +28,7 @@ prompt APPLICATION 105 - API Management
 -- Application Export:
 --   Application:     105
 --   Name:            API Management
---   Date and Time:   15:33 Monday March 27, 2023
+--   Date and Time:   15:46 Monday March 27, 2023
 --   Exported By:     OCI_API_PORTAL
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -115,7 +115,7 @@ wwv_flow_imp.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'API Management'
 ,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_upd_yyyymmddhh24miss=>'20230327153300'
+,p_last_upd_yyyymmddhh24miss=>'20230327154620'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>22
 ,p_print_server_type=>'NATIVE'
@@ -20211,7 +20211,7 @@ wwv_flow_imp_shared.create_install_script(
 '                l_clob := get_url_basic_auth( metadata_url, ''OIC_CRED'' );',
 '                url := REGEXP_SUBSTR(l_clob, ''Endpoint URL.*?href=.*?>'');',
 '                url := REGEXP_SUBSTR(url, ''".*"'');',
-'                url := SUBSTR(url, 2, LENGTH(url) - 1);  ',
+'                url := SUBSTR(url, 2, LENGTH(url) - 2);  ',
 '            elsif REGEXP_INSTR( metadata_url, ''jobs$'' )!=0 then',
 '                spec_type := ''Scheduled Job'';',
 '                icon_url := ''job'';',
