@@ -11,12 +11,11 @@ export TF_VAR_group_common="atp,apigw"
 if [ -f $SCRIPT_DIR/../../group_common_env.sh ]; then
   . $SCRIPT_DIR/../../group_common_env.sh
 else
-  . $HOME/bin/env_oci_starter_testsuite.sh
-  export TF_VAR_compartment_ocid=$EX_COMPARTMENT_OCID
+  export TF_VAR_compartment_ocid=__TO_FILL__
   # TF_VAR_license_model : BRING_YOUR_OWN_LICENSE or LICENSE_INCLUDED
   export TF_VAR_license_model=BRING_YOUR_OWN_LICENSE
 
-  export APIM_HOST=xxxxxxxxx-apidb.adb.eu-frankfurt-1.oraclecloudapps.com
+  export APIM_HOST=__TO_FILL__
   # Landing Zone
   # export TF_VAR_lz_appdev_cmp_ocid=$TF_VAR_compartment_ocid
   # export TF_VAR_lz_database_cmp_ocid=$TF_VAR_compartment_ocid
