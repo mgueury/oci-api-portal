@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: starter-ui
+  labels:
+    app: starter-ui
+spec:
+  containers:
+  - name: starter-ui
+    image: ##DOCKER_PREFIX##/starter-ui:latest
+    ports:
+      - containerPort: 80
+        name: http-port
+  imagePullSecrets:
+  - name: ocirsecret        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: starter-ui-service
+spec:
+  selector:
+    app: starter-ui
+  ports:
+  - name: http-service-port
+    protocol: TCP
+    port: 80
+    targetPort: http-port
+---    

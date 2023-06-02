@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: k8s-go-ui
+  labels:
+    app: k8s-go-ui
+spec:
+  containers:
+  - name: k8s-go-ui
+    image: ##DOCKER_PREFIX##/k8s-go-ui:latest
+    ports:
+      - containerPort: 80
+        name: http-port
+  imagePullSecrets:
+  - name: ocirsecret        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-go-ui-service
+spec:
+  selector:
+    app: k8s-go-ui
+  ports:
+  - name: http-service-port
+    protocol: TCP
+    port: 80
+    targetPort: http-port
+---    

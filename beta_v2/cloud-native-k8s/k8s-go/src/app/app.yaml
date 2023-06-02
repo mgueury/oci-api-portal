@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: k8s-go-app
+  labels:
+    app: k8s-go-app
+spec:
+  containers:
+  - name: app
+    image: ##DOCKER_PREFIX##/k8s-go-app
+    ports:
+    - containerPort: 8080
+      name: app-port
+    env:
+    - name: DB_URL
+      valueFrom:
+        secretKeyRef:
+          name: k8s-go-db-secret
+          key: db_url
+    - name: DB_USER
+      valueFrom:
+        secretKeyRef:
+          name: k8s-go-db-secret
+          key: db_user
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: k8s-go-db-secret
+          key: db_password
+  imagePullSecrets:
+  - name: ocirsecret        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-go-app-service
+spec:
+  selector:
+    app: k8s-go-app
+  ports:
+  - name: http-service-port
+    protocol: TCP
+    port: 80
+    targetPort: app-port
+---
