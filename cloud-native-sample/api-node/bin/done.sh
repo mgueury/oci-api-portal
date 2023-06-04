@@ -8,13 +8,7 @@ else
   . bin/shared_bash_function.sh
 fi 
 
-if [ "$TF_VAR_deploy_strategy" == "compute" ]; then
-  get_output_from_tfstate UI_URL ui_url  
-elif [ "$TF_VAR_deploy_strategy" == "kubernetes" ]; then
-  export UI_URL=http://`kubectl get service -n ingress-nginx ingress-nginx-controller -o jsonpath="{.status.loadBalancer.ingress[0].ip}"`/${TF_VAR_prefix}
-elif [ "$TF_VAR_deploy_strategy" == "function" ] || [ "$TF_VAR_deploy_strategy" == "container_instance" ]; then  
-  export UI_URL=https://${APIGW_HOSTNAME}/${TF_VAR_prefix}
-fi
+get_ui_url
 
 echo 
 echo "Build done"
@@ -61,7 +55,7 @@ if [ ! -z "$UI_URL" ]; then
     echo - JSP Page        : $UI_URL/app/index.jsp
   elif [ "$TF_VAR_deploy_strategy" == "compute" ] && [ "$TF_VAR_ui_strategy" == "api" ]; then   
     export APIGW_URL=https://${APIGW_HOSTNAME}/${TF_VAR_prefix}  
-    echo - API Gateway URL : $APIGW_URL/app/dept
+    echo - API Gateway URL : $APIGW_URL/app/dept 
   fi
 fi
 
