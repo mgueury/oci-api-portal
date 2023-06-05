@@ -20,7 +20,7 @@ begin
 wwv_flow_imp.import_begin (
  p_version_yyyy_mm_dd=>'2023.04.28'
 ,p_release=>'23.1.0'
-,p_default_workspace_id=>7348259602625655
+,p_default_workspace_id=>9968178802046287
 ,p_default_application_id=>100
 ,p_default_id_offset=>7349372519640022
 ,p_default_owner=>'API'
@@ -33,7 +33,7 @@ prompt APPLICATION 100 - API Management
 -- Application Export:
 --   Application:     100
 --   Name:            API Management
---   Date and Time:   14:47 Friday June 2, 2023
+--   Date and Time:   11:54 Monday June 5, 2023
 --   Exported By:     API
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -121,7 +121,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'API Management'
 ,p_last_updated_by=>'API'
-,p_last_upd_yyyymmddhh24miss=>'20230602103620'
+,p_last_upd_yyyymmddhh24miss=>'20230605114940'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>22
 ,p_print_server_type=>'NATIVE'
@@ -19586,7 +19586,7 @@ wwv_flow_imp_page.create_page(
 ,p_protection_level=>'C'
 ,p_page_component_map=>'16'
 ,p_last_updated_by=>'API'
-,p_last_upd_yyyymmddhh24miss=>'20230602064006'
+,p_last_upd_yyyymmddhh24miss=>'20230605114940'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(20883089654490137)
@@ -19600,14 +19600,14 @@ wwv_flow_imp_page.create_page_plug(
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(8748925604400003)
-,p_plug_name=>'New'
+,p_plug_name=>'Help'
 ,p_parent_plug_id=>wwv_flow_imp.id(20883089654490137)
 ,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
 ,p_plug_template=>wwv_flow_imp.id(20455669757840290)
-,p_plug_display_sequence=>50
+,p_plug_display_sequence=>10
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'In Oracle Integration 2, use an OCI  username and password.<br>',
-'In Oracle Integration 3, use a ClientID and ClientSecret.<br>'))
+'In Oracle Integration 3, use a ClientID and ClientSecret.<br><br>'))
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
 );
@@ -20054,228 +20054,586 @@ wwv_flow_imp_shared.create_install(
 );
 end;
 /
-prompt --application/deployment/install/install_api_management_table_view
+prompt --application/deployment/install/install_api_management_table_view2
 begin
 wwv_flow_imp_shared.create_install_script(
- p_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9950919891497648)
 ,p_install_id=>wwv_flow_imp.id(20731107338936167)
-,p_name=>'API_MANAGEMENT_TABLE_VIEW'
-,p_sequence=>10
+,p_name=>'API_MANAGEMENT_TABLE_VIEW2'
+,p_sequence=>11
 ,p_script_type=>'INSTALL'
 ,p_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'CREATE TABLE "SOURCE" ',
-'   (	"SOURCE_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
-'	"SOURCE_TYPE" VARCHAR2(256), ',
-'	"OIC_HOST" VARCHAR2(256), ',
-'	"GIT_URL" VARCHAR2(256), ',
-'	"COMPARTMENT_OCID" VARCHAR2(256), ',
-'	"KUBECONFIG_PATH" VARCHAR2(256), ',
+'  CREATE TABLE "SPECIFICATION" ',
+'   (	"SPEC_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
+'	"IMPL_ID" NUMBER, ',
+'	"NAME" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"CONTENT" CLOB COLLATE "USING_NLS_COMP", ',
+'	"VERSION" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"UPDATE_TIME" DATE, ',
+'	"SPEC_TYPE" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"DISCOVER_ID" NUMBER, ',
+'	"SOURCE_URL" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"OCID" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"SOURCE_TYPE" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	 CONSTRAINT "SPECIFICATION_PK" PRIMARY KEY ("SPEC_ID")',
+'  USING INDEX  ENABLE',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
+'',
+'  CREATE TABLE "DISCOVER_LOG" ',
+'   (	"DISCOVER_ID" NUMBER, ',
+'	"MESSAGE" VARCHAR2(4000) COLLATE "USING_NLS_COMP", ',
+'	"UPDATE_TIME" DATE, ',
+'	"LOG_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
+'	"LOB" CLOB COLLATE "USING_NLS_COMP", ',
+'	 CONSTRAINT "DISCOVER_LOG_PK" PRIMARY KEY ("LOG_ID")',
+'  USING INDEX  ENABLE',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
+'',
+'  CREATE TABLE "SOURCE" ',
+'   (	"SOURCE_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
+'	"SOURCE_TYPE" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"OIC_HOST" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"GIT_URL" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"COMPARTMENT_OCID" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"KUBECONFIG_PATH" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"REGION" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"IDCS_HOST" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"OAUTH_SCOPE" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
 '	 CONSTRAINT "SOURCE_PK" PRIMARY KEY ("SOURCE_ID")',
 '  USING INDEX  ENABLE',
-'   ) ;',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
 '',
-'CREATE TABLE "DISCOVER" ',
-'   (	"DISCOVER_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
+'  CREATE TABLE "DISCOVER" ',
+'   (	"DISCOVER_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
 '	"START_TIME" DATE, ',
 '	"SOURCE_ID" NUMBER, ',
 '	 CONSTRAINT "DISCOVER_PK" PRIMARY KEY ("DISCOVER_ID")',
 '  USING INDEX  ENABLE',
-'   ) ;',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
 '',
-'CREATE TABLE "API" ',
-'   (	"NAME" VARCHAR2(128), ',
-'	"DESCRIPTION" VARCHAR2(512), ',
-'	"API_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
-'	"AUTHOR" VARCHAR2(256), ',
+'  CREATE TABLE "API" ',
+'   (	"NAME" VARCHAR2(128) COLLATE "USING_NLS_COMP", ',
+'	"DESCRIPTION" VARCHAR2(512) COLLATE "USING_NLS_COMP", ',
+'	"API_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
+'	"AUTHOR" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
 '	 CONSTRAINT "API_ID" PRIMARY KEY ("API_ID")',
 '  USING INDEX  ENABLE',
-'   ) ;',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
 '',
-'CREATE TABLE "IMPLEMENTATION" ',
-'   (	"NAME" VARCHAR2(256), ',
-'	"SOURCE_TYPE" VARCHAR2(256), ',
-'	"SOURCE_URL" VARCHAR2(256), ',
-'	"VERSION" VARCHAR2(256), ',
+'  CREATE TABLE "IMPLEMENTATION" ',
+'   (	"NAME" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"SOURCE_TYPE" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"SOURCE_URL" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"VERSION" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
 '	"API_ID" NUMBER, ',
-'	"ICON_URL" VARCHAR2(256), ',
+'	"ICON_URL" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
 '	"USER_RATING" NUMBER, ',
 '	"PUBLISHED" NUMBER, ',
-'	"IMPL_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
+'	"IMPL_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
 '	"DISCOVER_ID" NUMBER, ',
-'	"RUNTIME_CONSOLE" VARCHAR2(512), ',
+'	"RUNTIME_CONSOLE" VARCHAR2(512) COLLATE "USING_NLS_COMP", ',
 '	"UPDATE_TIME" DATE, ',
 '	 CONSTRAINT "IMPLEMENTATION_PK" PRIMARY KEY ("IMPL_ID")',
 '  USING INDEX  ENABLE',
-'   ) ;',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
 '',
-'CREATE TABLE "TYPE" ',
-'   (	"TYPE_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
-'	"NAME" VARCHAR2(20), ',
+'  CREATE TABLE "TYPE" ',
+'   (	"TYPE_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
+'	"NAME" VARCHAR2(20) COLLATE "USING_NLS_COMP", ',
 '	 CONSTRAINT "TYPE_PK" PRIMARY KEY ("TYPE_ID")',
 '  USING INDEX  ENABLE',
-'   ) ;',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
 '',
-'CREATE TABLE "CONFORMANCE" ',
-'   (	"CONFORMANCE_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
-'	"NAME" VARCHAR2(20), ',
+'  CREATE TABLE "CONFORMANCE" ',
+'   (	"CONFORMANCE_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
+'	"NAME" VARCHAR2(20) COLLATE "USING_NLS_COMP", ',
 '	"TYPE_ID" NUMBER, ',
 '	 CONSTRAINT "CONFORMANCE_PK" PRIMARY KEY ("CONFORMANCE_ID")',
 '  USING INDEX  ENABLE',
-'   ) ;',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
 '',
-'CREATE TABLE "TEST" ',
-'   (	"TEST_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
-'	"NAME" VARCHAR2(128), ',
-'	"DESCRIPTION" VARCHAR2(512), ',
+'  CREATE TABLE "TEST" ',
+'   (	"TEST_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
+'	"NAME" VARCHAR2(128) COLLATE "USING_NLS_COMP", ',
+'	"DESCRIPTION" VARCHAR2(512) COLLATE "USING_NLS_COMP", ',
 '	 CONSTRAINT "TEST_PK" PRIMARY KEY ("TEST_ID")',
 '  USING INDEX  ENABLE',
-'   ) ;',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
 '',
-'CREATE TABLE "CONFORMANCE_TEST" ',
+'  CREATE TABLE "CONFORMANCE_TEST" ',
 '   (	"CONFORMANCE_ID" NUMBER NOT NULL ENABLE, ',
 '	"TEST_ID" NUMBER NOT NULL ENABLE, ',
 '	"ID" NUMBER, ',
 '	 CONSTRAINT "CONFORMANCE_TEST_PK" PRIMARY KEY ("ID")',
 '  USING INDEX  ENABLE',
-'   ) ;',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
 '',
-'CREATE TABLE "SPECIFICATION" ',
-'   (	"SPEC_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
-'	"IMPL_ID" NUMBER, ',
-'	"NAME" VARCHAR2(256), ',
-'	"CONTENT" CLOB, ',
-'	"VERSION" VARCHAR2(256), ',
-'	"UPDATE_TIME" DATE, ',
-'	"SPEC_TYPE" VARCHAR2(256), ',
-'	"DISCOVER_ID" NUMBER, ',
-'	"SOURCE_URL" VARCHAR2(256), ',
-'	"OCID" VARCHAR2(256), ',
-'	"SOURCE_TYPE" VARCHAR2(256), ',
-'	 CONSTRAINT "SPECIFICATION_PK" PRIMARY KEY ("SPEC_ID")',
-'  USING INDEX  ENABLE',
-'   ) ;',
-'',
-'CREATE TABLE "CONFORMANCE_SPECIFICATION" ',
+'  CREATE TABLE "CONFORMANCE_SPECIFICATION" ',
 '   (	"CONFORMANCE_ID" NUMBER, ',
-'	"ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
+'	"ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
 '	"SPEC_ID" NUMBER, ',
 '	 CONSTRAINT "CONFORMANCE_SPECIFICATION_PK" PRIMARY KEY ("ID")',
 '  USING INDEX  ENABLE',
-'   ) ;',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
 '',
-'CREATE TABLE "TAG" ',
-'   (	"TAG_NAME" VARCHAR2(20), ',
-'	"TAG_VALUE" VARCHAR2(20), ',
-'	"TAG_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
+'  CREATE TABLE "TAG" ',
+'   (	"TAG_NAME" VARCHAR2(20) COLLATE "USING_NLS_COMP", ',
+'	"TAG_VALUE" VARCHAR2(20) COLLATE "USING_NLS_COMP", ',
+'	"TAG_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
 '	 CONSTRAINT "TAG_PK" PRIMARY KEY ("TAG_ID")',
 '  USING INDEX  ENABLE',
-'   ) ;',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
 '',
-'CREATE TABLE "TAG_IMPL" ',
-'   (	"ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
+'  CREATE TABLE "TAG_IMPL" ',
+'   (	"ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
 '	"TAG_ID" NUMBER, ',
 '	"IMPL_ID" NUMBER, ',
 '	 CONSTRAINT "TAG_IMPL_PK" PRIMARY KEY ("ID")',
 '  USING INDEX  ENABLE',
-'   ) ;',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
 '',
-'CREATE TABLE "ENDPOINT" ',
-'   (	"ENDPOINT_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
-'	"URL" VARCHAR2(256), ',
+'  CREATE TABLE "ENDPOINT" ',
+'   (	"ENDPOINT_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, ',
+'	"URL" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
 '	"UPDATE_TIME" DATE, ',
 '	"IMPL_ID" NUMBER, ',
 '	"DISCOVER_ID" NUMBER, ',
-'	"SOURCE_URL" VARCHAR2(256), ',
-'	"OCID" VARCHAR2(256), ',
-'	"SOURCE_TYPE" VARCHAR2(256), ',
+'	"SOURCE_URL" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"OCID" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
+'	"SOURCE_TYPE" VARCHAR2(256) COLLATE "USING_NLS_COMP", ',
 '	 CONSTRAINT "ENDPOINT_PK" PRIMARY KEY ("ENDPOINT_ID")',
 '  USING INDEX  ENABLE',
-'   ) ;',
+'   )  DEFAULT COLLATION "USING_NLS_COMP" ;',
 '',
-'CREATE TABLE "DISCOVER_LOG" ',
-'   (	"DISCOVER_ID" NUMBER, ',
-'	"MESSAGE" VARCHAR2(512), ',
-'	"UPDATE_TIME" DATE, ',
-'	"LOG_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOT NULL ENABLE, ',
-'	"LOB" CLOB, ',
-'	 CONSTRAINT "DISCOVER_LOG_PK" PRIMARY KEY ("LOG_ID")',
-'  USING INDEX  ENABLE',
-'   ) ;',
-'',
-'ALTER TABLE "ENDPOINT" ADD CONSTRAINT "FK_ENDPOINT_IMP" FOREIGN KEY ("IMPL_ID")',
-'	  REFERENCES "IMPLEMENTATION" ("IMPL_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
-'',
-'ALTER TABLE "CONFORMANCE" ADD CONSTRAINT "FK_CONFORMANCE_TYPE" FOREIGN KEY ("TYPE_ID")',
+'  ALTER TABLE "CONFORMANCE" ADD CONSTRAINT "FK_CONFORMANCE_TYPE" FOREIGN KEY ("TYPE_ID")',
 '	  REFERENCES "TYPE" ("TYPE_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
 '',
-'ALTER TABLE "CONFORMANCE_TEST" ADD CONSTRAINT "FK_CT_CONFORMANCE" FOREIGN KEY ("CONFORMANCE_ID")',
+'  ALTER TABLE "CONFORMANCE_SPECIFICATION" ADD CONSTRAINT "FK_CS_CONFORMANCE" FOREIGN KEY ("CONFORMANCE_ID")',
 '	  REFERENCES "CONFORMANCE" ("CONFORMANCE_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
-'',
-'ALTER TABLE "CONFORMANCE_TEST" ADD CONSTRAINT "FK_CT_TEST" FOREIGN KEY ("TEST_ID")',
-'	  REFERENCES "TEST" ("TEST_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
-'',
-'ALTER TABLE "IMPLEMENTATION" ADD CONSTRAINT "FK_IMPL_API" FOREIGN KEY ("API_ID")',
-'	  REFERENCES "API" ("API_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
-'',
-'ALTER TABLE "SPECIFICATION" ADD CONSTRAINT "FK_SPEC_IMPL" FOREIGN KEY ("IMPL_ID")',
-'	  REFERENCES "IMPLEMENTATION" ("IMPL_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
-'',
-'ALTER TABLE "CONFORMANCE_SPECIFICATION" ADD CONSTRAINT "FK_CS_CONFORMANCE" FOREIGN KEY ("CONFORMANCE_ID")',
-'	  REFERENCES "CONFORMANCE" ("CONFORMANCE_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
-'',
-'ALTER TABLE "CONFORMANCE_SPECIFICATION" ADD CONSTRAINT "FK_CS_SPECIFICATION" FOREIGN KEY ("SPEC_ID")',
+'  ALTER TABLE "CONFORMANCE_SPECIFICATION" ADD CONSTRAINT "FK_CS_SPECIFICATION" FOREIGN KEY ("SPEC_ID")',
 '	  REFERENCES "SPECIFICATION" ("SPEC_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
 '',
-'ALTER TABLE "TAG_IMPL" ADD CONSTRAINT "FK_TI_TAG" FOREIGN KEY ("TAG_ID")',
-'	  REFERENCES "TAG" ("TAG_ID") ON DELETE CASCADE ENABLE;',
+'  ALTER TABLE "CONFORMANCE_TEST" ADD CONSTRAINT "FK_CT_CONFORMANCE" FOREIGN KEY ("CONFORMANCE_ID")',
+'	  REFERENCES "CONFORMANCE" ("CONFORMANCE_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
+'  ALTER TABLE "CONFORMANCE_TEST" ADD CONSTRAINT "FK_CT_TEST" FOREIGN KEY ("TEST_ID")',
+'	  REFERENCES "TEST" ("TEST_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
 '',
-'ALTER TABLE "DISCOVER" ADD CONSTRAINT "FK_DISCOVER_SOURCE" FOREIGN KEY ("SOURCE_ID")',
-'	  REFERENCES "SOURCE" ("SOURCE_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
-'',
-'CREATE INDEX "CT_UNIQUE" ON "CONFORMANCE_TEST" ("CONFORMANCE_ID", "TEST_ID") ',
+'  CREATE INDEX "CT_UNIQUE" ON "CONFORMANCE_TEST" ("CONFORMANCE_ID", "TEST_ID") ',
 '  ;',
 '',
-'CREATE OR REPLACE EDITIONABLE PACKAGE "API_DISCOVER" as',
+'  ALTER TABLE "DISCOVER" ADD CONSTRAINT "FK_DISCOVER_SOURCE" FOREIGN KEY ("SOURCE_ID")',
+'	  REFERENCES "SOURCE" ("SOURCE_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
+'',
+'  CREATE OR REPLACE EDITIONABLE TRIGGER "LOG_TRIGGER" ',
+'  BEFORE INSERT OR UPDATE ON "DISCOVER_LOG" FOR EACH ROW',
+'BEGIN',
+'  :new.update_time := SYSDATE;',
+'END;',
+'',
+'/',
+'ALTER TRIGGER "LOG_TRIGGER" ENABLE;',
+'',
+'  ALTER TABLE "ENDPOINT" ADD CONSTRAINT "FK_ENDPOINT_IMP" FOREIGN KEY ("IMPL_ID")',
+'	  REFERENCES "IMPLEMENTATION" ("IMPL_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
+'',
+'  CREATE OR REPLACE EDITIONABLE TRIGGER "ENDPOINT_TRIGGER" ',
+'  BEFORE INSERT OR UPDATE ON endpoint FOR EACH ROW',
+'BEGIN',
+'  :new.update_time := SYSDATE;',
+'END;',
+'',
+'/',
+'ALTER TRIGGER "ENDPOINT_TRIGGER" ENABLE;',
+'',
+'  ALTER TABLE "IMPLEMENTATION" ADD CONSTRAINT "FK_IMPL_API" FOREIGN KEY ("API_ID")',
+'	  REFERENCES "API" ("API_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
+'',
+'  CREATE OR REPLACE EDITIONABLE TRIGGER "IMPLEMENTATION_TRIGGER" ',
+'  BEFORE INSERT OR UPDATE ON implementation FOR EACH ROW',
+'BEGIN',
+'  :new.update_time := SYSDATE;',
+'END;',
+'',
+'/',
+'ALTER TRIGGER "IMPLEMENTATION_TRIGGER" ENABLE;',
+'',
+'  ALTER TABLE "SPECIFICATION" ADD CONSTRAINT "FK_SPEC_IMPL" FOREIGN KEY ("IMPL_ID")',
+'	  REFERENCES "IMPLEMENTATION" ("IMPL_ID") ON DELETE CASCADE ENABLE NOVALIDATE;',
+'',
+'  CREATE OR REPLACE EDITIONABLE TRIGGER "SPECIFICATION_TRIGGER" ',
+'  BEFORE INSERT OR UPDATE ON specification FOR EACH ROW',
+'BEGIN',
+'  :new.update_time := SYSDATE;',
+'END;',
+'',
+'/',
+'ALTER TRIGGER "SPECIFICATION_TRIGGER" ENABLE;',
+'',
+'  ALTER TABLE "TAG_IMPL" ADD CONSTRAINT "FK_TI_TAG" FOREIGN KEY ("TAG_ID")',
+'	  REFERENCES "TAG" ("TAG_ID") ON DELETE CASCADE ENABLE;',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'create or replace PACKAGE "API_DISCOVER" as',
 '  procedure discover_all;',
-'  procedure discover_oic( oic_host in VARCHAR2); ',
-'  procedure discover_apigw( compartment_id in VARCHAR2);  ',
+'  procedure discover_oic2( oic_host in VARCHAR2); ',
+'  procedure discover_oic3( oic_host in VARCHAR2, idcs_host in varchar2, oauth_scope in varchar2);',
+'  procedure discover_oic_common( a_clob in clob, runtime_console in varchar2 );',
+'  procedure discover_apigw( compartment_id in VARCHAR2, region in VARCHAR2);  ',
 '  procedure add_api( git_repo_url in varchar2, impl_name in varchar2, ',
 '                     icon_url in varchar2, impl_git_path in varchar2, runtime_console in varchar2, version in varchar2,',
 '                     endpoint_url in varchar2, endpoint_git_path in varchar2, spec_git_path in varchar2, spec_type in varchar2, tags in varchar2',
 '                   ); ',
 '  procedure oic_credential( oci_username in VARCHAR2, oci_password in varchar2 );',
-'  procedure apigw_credential( user_ocid in VARCHAR2, tenancy_ocid in varchar2, private_key in varchar2, fingerprint in varchar2 );                      ',
+'  procedure apigw_credential( user_ocid in VARCHAR2, tenancy_ocid in varchar2, private_key in varchar2, fingerprint in varchar2 );   ',
+'  function GET_OCI_REGION_LIST return DBMS_CLOUD_OCI_IDENTITY_REGION_TBL;                   ',
+'  procedure network_acl( source_type in varchar2, oic_host in varchar2, idcs_host in varchar2 );',
 'end;',
 '/',
 '',
 '',
-'CREATE OR REPLACE EDITIONABLE PACKAGE BODY "API_DISCOVER" as',
-'  m_discover_id number := 0;',
 '',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'create or replace TRIGGER "ENDPOINT_TRIGGER" ',
+'  BEFORE INSERT OR UPDATE ON endpoint FOR EACH ROW',
+'BEGIN',
+'  :new.update_time := SYSDATE;',
+'END;',
+'/',
+'create or replace TRIGGER "IMPLEMENTATION_TRIGGER" ',
+'  BEFORE INSERT OR UPDATE ON implementation FOR EACH ROW',
+'BEGIN',
+'  :new.update_time := SYSDATE;',
+'END;',
+'/',
+'create or replace TRIGGER "LOG_TRIGGER" ',
+'  BEFORE INSERT OR UPDATE ON "DISCOVER_LOG" FOR EACH ROW',
+'BEGIN',
+'  :new.update_time := SYSDATE;',
+'END;',
+'/',
+'create or replace TRIGGER "SPECIFICATION_TRIGGER" ',
+'  BEFORE INSERT OR UPDATE ON specification FOR EACH ROW',
+'BEGIN',
+'  :new.update_time := SYSDATE;',
+'END;',
+'/',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'create or replace type t_region as object (',
+'  name varchar2(256)',
+')',
+'/',
+'',
+'',
+'',
+'  CREATE OR REPLACE FORCE EDITIONABLE VIEW "TAG_VIEW" ("IMPL_ID", "LIST_TAG_NV") DEFAULT COLLATION "USING_NLS_COMP"  AS ',
+'  select ti.impl_id impl_id, LISTAGG(tag.tag_nv, '','') list_tag_nv ',
+'from tag_impl ti, ',
+'     (select tag_id, tag_name||''=''||tag_value tag_nv from tag) tag',
+' where ti.tag_id = tag.tag_id',
+' group by ti.impl_id',
+';',
+'',
+'  CREATE OR REPLACE FORCE EDITIONABLE VIEW "IMPL_VIEW" ("IMPL_ID", "IMPL_ICON_URL", "IMPL_NAME", "IMPL_SOURCE_TYPE", "IMPL_SOURCE_URL", "IMPL_VERSION", "RUNTIME_CONSOLE", "API_ID", "API_NAME", "API_DESCRIPTION", "API_AUTHOR", "SPEC_ID", "SPEC_TYPE", '
+||'"SPEC_NAME", "SPEC_VERSION", "SPEC_SOURCE_TYPE", "SPEC_SOURCE_URL", "ENDPOINT_ID", "ENDPOINT_URL", "ENDPOINT_SOURCE_TYPE", "ENDPOINT_SOURCE_URL", "TI_LIST_TAG_NV") DEFAULT COLLATION "USING_NLS_COMP"  AS ',
+'  select impl.impl_id impl_id, impl.icon_url impl_icon_url, impl.name impl_name, impl.source_type impl_source_type, impl.source_url impl_source_url, impl.VERSION impl_version, impl.runtime_console runtime_console,',
+'       api.api_id api_id, api.name api_name, api.description api_description, api.author api_author,',
+'       spec.spec_id spec_id,  spec_type spec_type, spec.name spec_name, spec.version spec_version, spec.source_type spec_source_type, spec.source_url spec_source_url,',
+'       endpoint.ENDPOINT_ID endpoint_id, endpoint.URL endpoint_url, endpoint.source_type endpoint_source_type, endpoint.source_url endpoint_source_url,',
+'       tv.list_tag_nv ti_list_tag_nv',
+'from implementation impl,',
+'     specification spec,',
+'     endpoint endpoint,',
+'     tag_view tv,',
+'     api api',
+'where api.api_id(+) = impl.api_id ',
+'  and spec.impl_id = impl.impl_id ',
+'  and endpoint.impl_id = impl.impl_id ',
+'  and tv.impl_id(+) = impl.impl_id',
+';',
+'',
+'  CREATE OR REPLACE EDITIONABLE TRIGGER "LOG_TRIGGER" ',
+'  BEFORE INSERT OR UPDATE ON "DISCOVER_LOG" FOR EACH ROW',
+'BEGIN',
+'  :new.update_time := SYSDATE;',
+'END;',
+'',
+'/',
+'ALTER TRIGGER "LOG_TRIGGER" ENABLE;',
+'',
+'  CREATE OR REPLACE EDITIONABLE TRIGGER "ENDPOINT_TRIGGER" ',
+'  BEFORE INSERT OR UPDATE ON endpoint FOR EACH ROW',
+'BEGIN',
+'  :new.update_time := SYSDATE;',
+'END;',
+'',
+'/',
+'ALTER TRIGGER "ENDPOINT_TRIGGER" ENABLE;',
+'',
+'  CREATE OR REPLACE EDITIONABLE TRIGGER "IMPLEMENTATION_TRIGGER" ',
+'  BEFORE INSERT OR UPDATE ON implementation FOR EACH ROW',
+'BEGIN',
+'  :new.update_time := SYSDATE;',
+'END;',
+'',
+'/',
+'ALTER TRIGGER "IMPLEMENTATION_TRIGGER" ENABLE;',
+'',
+'  CREATE OR REPLACE EDITIONABLE TRIGGER "SPECIFICATION_TRIGGER" ',
+'  BEFORE INSERT OR UPDATE ON specification FOR EACH ROW',
+'BEGIN',
+'  :new.update_time := SYSDATE;',
+'END;',
+'',
+'/',
+'ALTER TRIGGER "SPECIFICATION_TRIGGER" ENABLE;',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'create or replace PACKAGE BODY "API_DISCOVER" as',
+'  m_discover_id number := 0;',
 '  procedure log( s varchar2 ) is',
 '    -- PRAGMA AUTONOMOUS_TRANSACTION;',
 '  begin',
 '    insert into discover_log( discover_id, message ) values( m_discover_id, s );',
 '    commit;',
 '  end;  ',
+'  ----------------------------------------------------------------------------  ',
 '  procedure discover_all is ',
 '  begin',
-'    for rec in (SELECT SOURCE_ID, SOURCE_TYPE, OIC_HOST, COMPARTMENT_OCID, GIT_URL from SOURCE) loop',
+'    for rec in (SELECT SOURCE_ID, SOURCE_TYPE, OIC_HOST, COMPARTMENT_OCID, REGION, GIT_URL, IDCS_HOST, OAUTH_SCOPE  from SOURCE) loop',
 '       INSERT INTO DISCOVER(start_time, source_id) VALUES (SYSDATE, rec.source_id ) returning discover_id into m_discover_id;',
 '       log( ''-------------------------------'' );',
 '       log( ''<discover_all> source_id='' || rec.SOURCE_ID || '' / source_type='' || rec.SOURCE_TYPE );',
-'       if rec.source_type=''OIC'' then',
-'         discover_oic( rec.OIC_HOST );',
+'       if rec.source_type=''OIC2'' then',
+'         discover_oic2( rec.OIC_HOST );',
+'       elsif rec.source_type=''OIC3'' then',
+'         discover_oic3( rec.OIC_HOST, rec.IDCS_HOST, rec.OAUTH_SCOPE );',
 '       elsif rec.source_type=''OCI API Gateway'' then',
-'         discover_apigw( rec.COMPARTMENT_OCID );',
+'         discover_apigw( rec.COMPARTMENT_OCID, rec.region );',
 '       else   ',
 '         log( ''<discover_all> Unknown source_type='' || rec.SOURCE_TYPE ); ',
 '       end if;',
 '       commit;',
 '    end loop;',
 '  end;    ',
-'',
-'',
+'  ----------------------------------------------------------------------------',
+'  procedure network_acl( source_type in varchar2, oic_host in varchar2, idcs_host in varchar2 ) is',
+'    l_array apex_t_varchar2;',
+'    oic_design_host varchar2(4000);',
+'  begin',
+'    -- oic_host',
+'    if length(oic_host)>0 then',
+'      DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(',
+'        host => oic_host,',
+'        ace => XS$ACE_TYPE( ',
+'           privilege_list => XS$NAME_LIST(''http''),',
+'           principal_name => ''API'',',
+'           principal_type => XS_ACL.ptype_db));',
+'      log( ''<network_acl>oic_host='' || oic_host );    ',
+'    end if;  ',
+'    if source_type = ''OIC3'' then',
+'      l_array := apex_string.split(p_str  => oic_host, p_sep  => ''.'');',
+'      oic_design_host := ''design.integration.''||l_array(3)||''.ocp.oraclecloud.com'';',
+'      -- oic_design_host',
+'      DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(',
+'        host => oic_design_host,',
+'        ace => XS$ACE_TYPE( ',
+'           privilege_list => XS$NAME_LIST(''http''),',
+'           principal_name => ''API'',',
+'           principal_type => XS_ACL.ptype_db));',
+'      -- idcs_host',
+'      DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(',
+'        host => idcs_host,',
+'        ace => XS$ACE_TYPE( ',
+'            privilege_list => XS$NAME_LIST(''http''),',
+'            principal_name => ''API'',',
+'            principal_type => XS_ACL.ptype_db));',
+'      log( ''<network_acl>oic_design_host='' || oic_design_host );    ',
+'      log( ''<network_acl>idcs_host='' || idcs_host );    ',
+'    end if;',
+'  end;',
 '  ----------------------------------------------------------------------------',
 '  function get_url_basic_auth( url in varchar2, cred in varchar2 ) return clob is',
 '     req   UTL_HTTP.REQ;',
@@ -20301,7 +20659,66 @@ wwv_flow_imp_shared.create_install_script(
 '    -- insert into discover_log( discover_id, message, lob ) values( m_discover_id, ''<get_url_basic_auth> url='' || url, content );',
 '    return content;',
 '  END;',
+'  ----------------------------------------------------------------------------',
+'  function get_url_oauth( url in varchar2, token in varchar2 ) return clob is',
+'     req   UTL_HTTP.REQ;',
+'     resp  UTL_HTTP.RESP;',
+'     string clob;',
+'     content clob;',
+'     eob boolean := false;',
+'  BEGIN ',
+'    -- UTL_HTTP.SET_WALLET('''');',
+'    req := utl_http.begin_request(url);',
+'    utl_http.set_header(req, ''Authorization'', ''Bearer ''||token); ',
+'    utl_http.set_header(req, ''Accept'', ''application/json'');   ',
+'    resp := UTL_HTTP.GET_RESPONSE(req);',
+'    while not(eob) loop',
+'      BEGIN',
+'        utl_http.read_text(resp, string, 32766);',
+'        content := content || string;',
+'      EXCEPTION',
+'        when utl_http.end_of_body then',
+'          eob := true;',
+'      END;',
+'    END LOOP;',
+'    UTL_HTTP.END_RESPONSE(resp);  ',
+'    -- insert into discover_log( discover_id, message, lob ) values( m_discover_id, ''<get_url_basic_auth> url='' || url, content );',
+'    return content;',
+'  END;',
 '',
+'  ----------------------------------------------------------------------------',
+'  function get_url_oauth_token( url in varchar2, cred in varchar2, scope in varchar2 ) return varchar2 is',
+'    req utl_http.req;',
+'    resp  UTL_HTTP.RESP;',
+'    content clob; ',
+'    string clob;',
+'    body varchar2(4000) := ''grant_type=client_credentials&scope=''||utl_url.escape(scope,true);',
+'    j JSON_OBJECT_T;',
+'    access_token varchar2(4000);',
+'    eob boolean := false;',
+'  begin',
+'    log( ''<get_url_oauth_token>body length='' || length(body));  ',
+'    req := utl_http.begin_request(url, ''POST'');',
+'    UTL_HTTP.SET_CREDENTIAL (req, cred,''BASIC'');',
+'    UTL_HTTP.set_header(req, ''Content-Type'', ''application/x-www-form-urlencoded;charset=utf-8'');',
+'    utl_http.set_header(req, ''Content-Length'', length(body));',
+'    utl_http.write_text(req, body);',
+'    resp := UTL_HTTP.GET_RESPONSE(req);',
+'    while not(eob) loop',
+'      BEGIN',
+'        utl_http.read_text(resp, string, 32766);',
+'        content := content || string;',
+'      EXCEPTION',
+'        when utl_http.end_of_body then',
+'          eob := true;',
+'      END;',
+'    END LOOP;',
+'    j := JSON_OBJECT_T.PARSE(content); ',
+'    access_token := j.get_string(''access_token'');  ',
+'    log( ''<get_url_oauth_token>access_token='' || access_token );  ',
+'    return access_token;',
+'  END;',
+'  ',
 '  ----------------------------------------------------------------------------',
 '  procedure insert_tag( impl_id in number, a_tag_name in varchar2, a_tag_value in varchar2 ) is',
 '    tag_id number := 0;',
@@ -20316,7 +20733,6 @@ wwv_flow_imp_shared.create_install_script(
 '    end;',
 '    INSERT INTO TAG_IMPL (tag_id, impl_id) VALUES (tag_id, impl_id);',
 '  end;',
-'',
 '  ----------------------------------------------------------------------------',
 '  procedure insert_tags( impl_id in number, a_tags in varchar2 ) is',
 '    aTags apex_t_varchar2 ;',
@@ -20334,7 +20750,6 @@ wwv_flow_imp_shared.create_install_script(
 '        end if;',
 '    end loop;       ',
 '  end;',
-'',
 '  ----------------------------------------------------------------------------',
 '  function insert_api( a_name in varchar2, icon_url in varchar2, source_type in varchar2, impl_source_url in varchar2, version in varchar2, runtime_console in varchar2,',
 '                        endpoint_url in varchar2, endpoint_source_url in varchar2,  ',
@@ -20344,11 +20759,15 @@ wwv_flow_imp_shared.create_install_script(
 '    endpoint_id number;                        ',
 '  begin',
 '    log( ''<insert_api> name='' || a_name || '' / version='' || version || '' / endpoint_url='' || endpoint_url || '' / spec_source_url='' || spec_source_url );   ',
-'',
 '    -- Delete previous entries',
 '    BEGIN',
-'      SELECT i.impl_id into l_impl_id FROM ENDPOINT e, IMPLEMENTATION i ',
-'        WHERE e.impl_id=i.impl_id and i.name = a_name and e.url = endpoint_url;',
+'      IF endpoint_url is null or endpoint_url ='''' then',
+'          SELECT i.impl_id into l_impl_id FROM ENDPOINT e, IMPLEMENTATION i ',
+'            WHERE e.impl_id=i.impl_id and i.name = a_name and i.source_url = impl_source_url and i.version=version;',
+'      ELSE',
+'          SELECT i.impl_id into l_impl_id FROM ENDPOINT e, IMPLEMENTATION i ',
+'            WHERE e.impl_id=i.impl_id and i.name = a_name and e.url = endpoint_url;',
+'      END IF;      ',
 '      DELETE FROM TAG_IMPL where impl_id=l_impl_id;',
 '      DELETE FROM SPECIFICATION where impl_id=l_impl_id;',
 '      DELETE FROM ENDPOINT where impl_id=l_impl_id;',
@@ -20358,21 +20777,16 @@ wwv_flow_imp_shared.create_install_script(
 '      WHEN NO_DATA_FOUND THEN',
 '        NULL;',
 '    END;',
-'',
 '    INSERT INTO IMPLEMENTATION (name, icon_url, published, source_type, source_url, version, user_rating, runtime_console, discover_id ) ',
 '            VALUES (a_name, icon_url, 1, source_type, impl_source_url, version, 5, runtime_console, m_discover_id ) returning impl_id into l_impl_id;',
-'',
 '    INSERT INTO ENDPOINT (impl_id, url, source_type, source_url, discover_id) ',
 '            VALUES (l_impl_id, endpoint_url, source_type, endpoint_source_url, m_discover_id ) returning endpoint_id into endpoint_id;               ',
-'',
 '    INSERT INTO SPECIFICATION (impl_id, name, spec_type, content, source_type, source_url, version, discover_id) ',
 '            VALUES (l_impl_id, a_name, spec_type, content, source_type, spec_source_url, version, m_discover_id ) returning spec_id into spec_id;       ',
-'',
 '    return l_impl_id;         ',
-'  end;                   ',
-'',
+'  end;       ',
 '  ----------------------------------------------------------------------------',
-'  procedure discover_oic( oic_host in VARCHAR2) is',
+'  procedure discover_oic_common( a_clob in clob, runtime_console in varchar2 ) is',
 '    l_clob CLOB;',
 '    l_content CLOB;',
 '    j JSON_OBJECT_T;',
@@ -20389,12 +20803,11 @@ wwv_flow_imp_shared.create_install_script(
 '    spec_source_url varchar2(256);    ',
 '    spec_type varchar2(256);',
 '    metadata_url varchar2(256);',
-'    runtime_console varchar2(256);',
 '    impl_id number;',
 '  begin',
-'    l_clob := get_url_basic_auth( ''https://''||oic_host||''/ic/api/integration/v1/integrations'', ''OIC_CRED'' );',
-'    log( ''<discover_oic> length(clob)='' || length(l_clob) );  ',
-'    j := JSON_OBJECT_T.PARSE(l_clob);    ',
+'    log( ''<discover_oic> length(clob)='' || length(a_clob) );  ',
+'    log( ''<discover_oic> length(clob)='' || length(a_clob) );  ',
+'    j := JSON_OBJECT_T.PARSE(a_clob);    ',
 '    j_items := j.get_array(''items'');',
 '    LOOP',
 '      EXIT WHEN j_items.get(i) IS NULL;',
@@ -20408,7 +20821,6 @@ wwv_flow_imp_shared.create_install_script(
 '        spec_source_url := '''';',
 '        metadata_url := '''';',
 '        url := '''';',
-'        runtime_console := ''https://'' || oic_host || ''/ic/home/?root=integrations''; ',
 '        icon_url := ''rest'';',
 '        if wsdl_url is not null then',
 '            spec_source_url := wsdl_url;',
@@ -20421,6 +20833,7 @@ wwv_flow_imp_shared.create_install_script(
 '                spec_source_url := metadata_url || ''/openapi'';',
 '                spec_type := ''OpenAPI'';',
 '                -- The URL is in the HTML of the metadata... ',
+'                log(''metadata_url=''||metadata_url);',
 '                l_clob := get_url_basic_auth( metadata_url, ''OIC_CRED'' );',
 '                url := REGEXP_SUBSTR(l_clob, ''Endpoint URL.*?href=.*?>'');',
 '                url := REGEXP_SUBSTR(url, ''".*"'');',
@@ -20429,14 +20842,13 @@ wwv_flow_imp_shared.create_install_script(
 '                spec_type := ''Scheduled Job'';',
 '                icon_url := ''job'';',
 '            else',
-'                spec_type := ''-'';',
-'                icon_url := ''-'' ;       ',
+'                spec_type := ''Other'';',
+'                icon_url := ''rest'' ;       ',
 '            end if;',
 '        end if;',
 '        if spec_source_url != '''' then',
 '          l_content := get_url_basic_auth( spec_source_url, ''OIC_CRED'' );      ',
 '        end if;',
-'',
 '        impl_id := insert_api( name, icon_url, ''OIC'', metadata_url, version, runtime_console, ',
 '                               url, '''',',
 '                               spec_type, l_content, spec_source_url);     ',
@@ -20445,7 +20857,37 @@ wwv_flow_imp_shared.create_install_script(
 '    END LOOP;',
 '  end; ',
 '  ----------------------------------------------------------------------------',
-'  procedure discover_apigw( compartment_id in VARCHAR2) is',
+'  procedure discover_oic2( oic_host in VARCHAR2 ) is  ',
+'    l_clob CLOB;',
+'  begin  ',
+'    l_clob := get_url_basic_auth( ''https://''||oic_host||''/ic/api/integration/v1/integrations'', ''OIC_CRED'' );',
+'    discover_oic_common( l_clob, ''https://'' || oic_host || ''/ic/home/?root=integrations'' );',
+'  end;',
+'  ----------------------------------------------------------------------------',
+'  procedure discover_oic3( oic_host in VARCHAR2, idcs_host in varchar2, oauth_scope in varchar2) is',
+'    l_clob CLOB;',
+'    oauth_token varchar2(4000);',
+'    url varchar2(4000) := oic_host;',
+'    l_array apex_t_varchar2;',
+'  begin  ',
+'    oauth_token := get_url_oauth_token( ''https://'' || idcs_host || ''/oauth2/v1/token'', ''OIC_CRED'', oauth_scope );',
+'    l_array := apex_string.split(p_str  => oic_host, p_sep  => ''.'');',
+'    url := ''https://design.integration.''||l_array(3)||''.ocp.oraclecloud.com/ic/api/integration/v1/integrations?integrationInstance=''||l_array(1);',
+'    log( ''<discover_oic3> url=''||url );',
+'    l_clob := get_url_oauth( url, oauth_token);',
+'    discover_oic_common( l_clob, ''https://'' || oic_host || ''/ic/home/?root=integrations'' );',
+'  end;',
+' ----------------------------------------------------------------------------',
+' function GET_OCI_REGION_LIST return DBMS_CLOUD_OCI_IDENTITY_REGION_TBL as',
+'    drt dbms_cloud_oci_id_identity_list_regions_response_t;',
+'    items DBMS_CLOUD_OCI_IDENTITY_REGION_TBL;',
+'  begin ',
+'    drt := DBMS_CLOUD_OCI_ID_IDENTITY.list_regions(region => ''me-jeddah-1'', credential_name => ''OCI$RESOURCE_PRINCIPAL'');',
+'    items := drt.response_body;',
+'    return items;',
+'  end;',
+'  ----------------------------------------------------------------------------',
+'  procedure discover_apigw( compartment_id in VARCHAR2, region in VARCHAR2) is',
 '    drt dbms_cloud_oci_ag_deployment_list_deployments_response_t;',
 '    drb dbms_cloud_oci_apigateway_deployment_collection_t;',
 '    items dbms_cloud_oci_apigateway_deployment_summary_tbl;',
@@ -20469,10 +20911,9 @@ wwv_flow_imp_shared.create_install_script(
 '    l_child     JSON_ELEMENT_T;    ',
 '  begin ',
 '    -- See https://docs.oracle.com/en-us/iaas/pl-sql-sdk/doc/apigateway_t.html',
-'    drt := DBMS_CLOUD_OCI_AG_DEPLOYMENT.list_deployments (compartment_id => compartment_id, credential_name => ''OCI_CRED'', region => ''eu-frankfurt-1'');',
+'    drt := DBMS_CLOUD_OCI_AG_DEPLOYMENT.list_deployments (compartment_id => compartment_id, credential_name => ''OCI$RESOURCE_PRINCIPAL'' , region => region);',
 '    drb := drt.response_body; ',
 '    items := drb.items;',
-'',
 '    for i in 1 .. items.count loop ',
 '        if items(i).lifecycle_state=''ACTIVE'' then',
 '            dbms_output.put_line(items(i).display_name); ',
@@ -20486,7 +20927,15 @@ wwv_flow_imp_shared.create_install_script(
 '                apigw_deployment_ocid := items(i).id;',
 '                runtime_console := ''https://cloud.oracle.com/api-gateway/gateways/'' || apigw_ocid || ''/deployments/'' || apigw_deployment_ocid;',
 '                impl_source_url := tags.get_string(''api_git_url'');',
-'                endpoint_source_url := impl_source_url || tags.get_string(''api_git_endpoint_path'');',
+'                endpoint_source_url := impl_source_url || tags'))
+);
+end;
+/
+begin
+wwv_flow_imp_shared.append_to_install_script(
+ p_id=>wwv_flow_imp.id(9950919891497648)
+,p_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'.get_string(''api_git_endpoint_path'');',
 '                spec_source_url :=  impl_source_url || tags.get_string(''api_git_spec_path'');',
 '                icon_url := tags.get_string(''api_icon'');',
 '                name := INITCAP( items(i).display_name );',
@@ -20494,11 +20943,9 @@ wwv_flow_imp_shared.create_install_script(
 '                spec_type := tags.get_string(''api_git_spec_type'');',
 '                version := '''';',
 '                content := '''';',
-'',
 '                impl_id := insert_api( name, icon_url, ''OCI API Gateway'', impl_source_url, version, runtime_console, ',
 '                                       endpoint_url, endpoint_source_url, ',
 '                                       spec_type, content, spec_source_url );',
-'',
 '                -- Tags',
 '                -- l_element := JSON_ELEMENT_T.parse( json_in );',
 '                l_keys := tags.get_Keys();',
@@ -20513,7 +20960,6 @@ wwv_flow_imp_shared.create_install_script(
 '        end if;',
 '    end loop; ',
 '  end;   ',
-'',
 '  ----------------------------------------------------------------------------',
 '  procedure add_api( git_repo_url in varchar2, impl_name in varchar2, ',
 '                     icon_url in varchar2, impl_git_path in varchar2, runtime_console in varchar2, version in varchar2,',
@@ -20533,25 +20979,20 @@ wwv_flow_imp_shared.create_install_script(
 '  begin',
 '    -- # ex: https://console.eu-frankfurt-1.oraclecloud.com/api-gateway/gateways/ocid1.apigateway.oc1.eu-frankfurt-1.xxx/deployments/ocid1.apideployment.oc1.eu-frankfurt-1.xxxx',
 '    git_prefix := git_repo_url;',
-'',
 '    l_icon_url := icon_url;',
 '    if l_icon_url is null then',
 '       l_icon_url := ''rest'';',
 '    end if;   ',
-'',
 '    l_spec_type := spec_type;',
 '    if l_spec_type is null then',
 '       l_spec_type := ''OpenAPI'';',
 '    end if;   ',
-'',
 '    impl_source_type := ''CLI'';',
 '    impl_source_url := '''';',
 '    endpoint_source_url := '''';',
 '    spec_source_url := '''';',
 '    content := '''';',
-'',
 '    -- XXX read content via http / or send it via POST ?',
-'',
 '    if git_repo_url is not null then',
 '        if impl_git_path is not null then',
 '            impl_source_url := git_prefix  || impl_git_path;',
@@ -20567,21 +21008,18 @@ wwv_flow_imp_shared.create_install_script(
 '            spec_source_url := git_prefix || spec_git_path;',
 '        end if;',
 '    end if;    ',
-'',
 '    if runtime_console is not null and REGEXP_INSTR( runtime_console, ''api-gateway'' )!=0 then',
 '        impl_source_type := ''OCI API Gateway'';',
 '    end if;    ',
-'',
 '    impl_id := insert_api( impl_name, icon_url, impl_source_type, impl_source_url, version, runtime_console, ',
 '                           endpoint_url, endpoint_source_url, ',
 '                           l_spec_type, content, spec_source_url );',
-'',
 '    if tags is not null then ',
 '      insert_tags( impl_id, tags );',
 '    end if;',
 '    commit;',
 '  end;',
-'',
+'  ----------------------------------------------------------------------------  ',
 '  procedure oic_credential( oci_username in VARCHAR2, oci_password in varchar2 ) is',
 '  begin',
 '    begin',
@@ -20594,8 +21032,7 @@ wwv_flow_imp_shared.create_install_script(
 '        username        => oci_username,',
 '        password        => oci_password);',
 '  end;    ',
-'',
-'',
+'  ----------------------------------------------------------------------------  ',
 '  procedure apigw_credential( user_ocid in VARCHAR2, tenancy_ocid in varchar2, private_key in varchar2, fingerprint in varchar2 ) is',
 '  begin  ',
 '    begin',
@@ -20614,683 +21051,639 @@ wwv_flow_imp_shared.create_install_script(
 'end;',
 '/',
 '',
-'CREATE OR REPLACE EDITIONABLE TRIGGER "ENDPOINT_TRIGGER" ',
-'  BEFORE INSERT OR UPDATE ON endpoint FOR EACH ROW',
-'BEGIN',
-'  :new.update_time := SYSDATE;',
-'END;',
-'',
-'/',
 '',
 '',
-'ALTER TRIGGER "ENDPOINT_TRIGGER" ENABLE;',
-'',
-'CREATE OR REPLACE EDITIONABLE TRIGGER "IMPLEMENTATION_TRIGGER" ',
-'  BEFORE INSERT OR UPDATE ON implementation FOR EACH ROW',
-'BEGIN',
-'  :new.update_time := SYSDATE;',
-'END;',
-'',
-'/',
 '',
 '',
-'ALTER TRIGGER "IMPLEMENTATION_TRIGGER" ENABLE;',
-'',
-'CREATE OR REPLACE EDITIONABLE TRIGGER "LOG_TRIGGER" ',
-'  BEFORE INSERT OR UPDATE ON "DISCOVER_LOG" FOR EACH ROW',
-'BEGIN',
-'  :new.update_time := SYSDATE;',
-'END;',
-'',
-'/',
 '',
 '',
-'ALTER TRIGGER "LOG_TRIGGER" ENABLE;',
-'',
-'CREATE OR REPLACE EDITIONABLE TRIGGER "SPECIFICATION_TRIGGER" ',
-'  BEFORE INSERT OR UPDATE ON specification FOR EACH ROW',
-'BEGIN',
-'  :new.update_time := SYSDATE;',
-'END;',
-'',
-'/',
 '',
 '',
-'ALTER TRIGGER "SPECIFICATION_TRIGGER" ENABLE;',
 '',
-'CREATE OR REPLACE FORCE EDITIONABLE VIEW "TAG_VIEW" ("IMPL_ID", "LIST_TAG_NV") AS ',
-'  select ti.impl_id impl_id, LISTAGG(tag.tag_nv, '','') list_tag_nv ',
-'from tag_impl ti, ',
-'     (select tag_id, tag_name||''=''||tag_value tag_nv from tag) tag',
-' where ti.tag_id = tag.tag_id',
-' group by ti.impl_id;',
 '',
-'CREATE OR REPLACE FORCE EDITIONABLE VIEW "IMPL_VIEW" ("IMPL_ID", "IMPL_ICON_URL", "IMPL_NAME", "IMPL_SOURCE_TYPE", "IMPL_SOURCE_URL", "IMPL_VERSION", "RUNTIME_CONSOLE", "API_ID", "API_NAME", "API_DESCRIPTION", "API_AUTHOR", "SPEC_ID", "SPEC_TYPE", "S'
-||'PEC_NAME", "SPEC_VERSION", "SPEC_SOURCE_TYPE", "SPEC_SOURCE_URL", "ENDPOINT_ID", "ENDPOINT_URL", "ENDPOINT_SOURCE_TYPE", "ENDPOINT_SOURCE_URL", "TI_LIST_TAG_NV") AS ',
-'  select impl.impl_id impl_id, impl.icon_url impl_icon_url, impl.name impl_name, impl.source_type impl_source_type, impl.source_url impl_source_url, impl.VERSION impl_version, impl.runtime_console runtime_console,',
-'       api.api_id api_id, api.name api_name, api.description api_description, api.author api_author,',
-'       spec.spec_id spec_id,  spec_type spec_type, spec.name spec_name, spec.version spec_version, spec.source_type spec_source_type, spec.source_url spec_source_url,',
-'       endpoint.ENDPOINT_ID endpoint_id, endpoint.URL endpoint_url, endpoint.source_type endpoint_source_type, endpoint.source_url endpoint_source_url,',
-'       tv.list_tag_nv ti_list_tag_nv',
-'from implementation impl,',
-'     specification spec,',
-'     endpoint endpoint,',
-'     tag_view tv,',
-'     api api',
-'where api.api_id(+) = impl.api_id ',
-'  and spec.impl_id = impl.impl_id ',
-'  and endpoint.impl_id = impl.impl_id ',
-'  and tv.impl_id(+) = impl.impl_id;',
 '',
-''))
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+'',
+' '))
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26905905131352348)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9953073870497682)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'API_ID'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26906097928352350)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9953233482497682)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'CONFORMANCE_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26906339701352350)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9953638832497682)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'CONFORMANCE_SPECIFICATION_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26906552885352351)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9953899218497682)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'CONFORMANCE_TEST_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26906718529352351)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9954089367497682)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'CT_UNIQUE'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26906878463352351)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9954253316497683)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'DISCOVER_LOG_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26907083689352351)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9954468056497683)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'DISCOVER_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26907366396352351)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9954682735497683)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'ENDPOINT_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26907496767352351)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9954814702497683)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'IMPLEMENTATION_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26907747061352351)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9955002243497683)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'SOURCE_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26907935296352352)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9955240578497683)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'SPECIFICATION_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
-end;
-/
-begin
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26908084328352352)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9955497695497683)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'TAG_IMPL_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26908371756352352)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9955632040497683)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'TAG_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26908488659352352)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9955868392497684)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'TEST_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26908764369352352)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9956022803497684)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'INDEX'
 ,p_object_name=>'TYPE_PK'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26908884149352352)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9956200451497684)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'PACKAGE'
 ,p_object_name=>'API_DISCOVER'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26909142234352352)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9956454643497684)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_284859'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81233'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26909311826352352)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9956682095497684)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_284863'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81236'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26909536956352352)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9956824170497684)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_284868'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81239'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26909680294352353)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9957074716497684)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_284871'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81242'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26909923785352353)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9957246956497684)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_284874'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81245'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26910127234352353)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9957488074497684)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_284877'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81248'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26910309002352353)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9957616786497685)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_284881'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81251'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26910523314352353)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9957833010497685)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_285203'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81256'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26910742928352353)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9958087470497685)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_285207'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81261'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26910915092352353)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9958235718497685)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_285510'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81264'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26911124474352353)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9958465765497685)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_285511'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81267'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26911306446352354)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9958609344497685)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_285515'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81270'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26911539431352354)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9958885441497686)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_285519'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_object_name=>'ISEQ$$_81273'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26911713267352354)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
-,p_object_owner=>'#OWNER#'
-,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_285523'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-);
-wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26911937630352354)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
-,p_object_owner=>'#OWNER#'
-,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_285613'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-);
-wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26912122978352354)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
-,p_object_owner=>'#OWNER#'
-,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_286223'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-);
-wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26912300111352354)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
-,p_object_owner=>'#OWNER#'
-,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_287754'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-);
-wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26912507676352354)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
-,p_object_owner=>'#OWNER#'
-,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_289454'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-);
-wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26912744311352354)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
-,p_object_owner=>'#OWNER#'
-,p_object_type=>'SEQUENCE'
-,p_object_name=>'ISEQ$$_289457'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-);
-wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26912950185352354)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9959020524497686)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'API'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26913125664352355)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9959295469497686)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'CONFORMANCE'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26913343305352355)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9959426450497686)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'CONFORMANCE_SPECIFICATION'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26913514936352355)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9959609198497686)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'CONFORMANCE_TEST'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26913708954352355)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9959822710497686)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'DISCOVER'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26913966695352355)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9960028423497686)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'DISCOVER_LOG'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26914143172352355)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9960286825497687)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'ENDPOINT'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26914316299352355)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9960446848497687)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'IMPLEMENTATION'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26914508944352355)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9960631608497687)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'SOURCE'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26914733336352355)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9960877803497687)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'SPECIFICATION'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26914931698352356)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9953494293497682)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'TAG'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26915147225352356)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9951022354497678)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'TAG_IMPL'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26915294368352356)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9951203087497681)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'TEST'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26915505927352356)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9951410277497681)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TABLE'
 ,p_object_name=>'TYPE'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26915693284352356)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9951660160497681)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TRIGGER'
 ,p_object_name=>'ENDPOINT_TRIGGER'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26915878905352356)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9951803654497681)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TRIGGER'
 ,p_object_name=>'IMPLEMENTATION_TRIGGER'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26916098797352356)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9952099279497681)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TRIGGER'
 ,p_object_name=>'LOG_TRIGGER'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26916315833352356)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9952239950497681)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'TRIGGER'
 ,p_object_name=>'SPECIFICATION_TRIGGER'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26916476144352356)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9952441018497682)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
+,p_object_owner=>'#OWNER#'
+,p_object_type=>'TYPE'
+,p_object_name=>'T_REGION'
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+);
+wwv_flow_imp_shared.create_install_object(
+ p_id=>wwv_flow_imp.id(9952605737497682)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'VIEW'
 ,p_object_name=>'IMPL_VIEW'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 wwv_flow_imp_shared.create_install_object(
- p_id=>wwv_flow_imp.id(26916747480352357)
-,p_script_id=>wwv_flow_imp.id(26905840261352342)
+ p_id=>wwv_flow_imp.id(9952839223497682)
+,p_script_id=>wwv_flow_imp.id(9950919891497648)
 ,p_object_owner=>'#OWNER#'
 ,p_object_type=>'VIEW'
 ,p_object_name=>'TAG_VIEW'
-,p_last_updated_by=>'OCI_API_PORTAL'
-,p_last_updated_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
-,p_created_by=>'OCI_API_PORTAL'
-,p_created_on=>to_date('20230327153252','YYYYMMDDHH24MISS')
+,p_last_updated_by=>'API'
+,p_last_updated_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
+,p_created_by=>'API'
+,p_created_on=>to_date('20230605101627','YYYYMMDDHH24MISS')
 );
 end;
 /

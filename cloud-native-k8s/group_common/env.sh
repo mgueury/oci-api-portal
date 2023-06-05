@@ -13,12 +13,13 @@ if [ -f $SCRIPT_DIR/../../group_common_env.sh ]; then
 else
   # export TF_VAR_compartment_ocid=ocid1.compartment.xxxxx
   # TF_VAR_license_model : BRING_YOUR_OWN_LICENSE or LICENSE_INCLUDED
-  export TF_VAR_license_model="LICENSE_INCLUDED"
+  export TF_VAR_license_model="BRING_YOUR_OWN_LICENSE"
   # TF_VAR_auth_token : See doc: https://docs.oracle.com/en-us/iaas/Content/Registry/Tasks/registrygettingauthtoken.htm
   export TF_VAR_auth_token="__TO_FILL__"
 
   # API Management
-  # export APIM_HOST=xxxx-xxx.adb.region.oraclecloudapps.com
+  # ex: xxxx-xxx.adb.region.oraclecloudapps.com
+  export APIM_HOST="__TO_FILL__"
 
   # Landing Zone
   # export TF_VAR_lz_appdev_cmp_ocid=$TF_VAR_compartment_ocid
