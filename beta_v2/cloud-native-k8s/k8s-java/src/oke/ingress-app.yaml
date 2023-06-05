@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: starter-app-ingress
+  name: k8s-java-app-ingress
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/rewrite-target: /$2    
@@ -10,11 +10,11 @@ spec:
   rules:
     - http:
         paths:
-          - path: /starter/app(/|$)(.*)
+          - path: /k8s-java/app(/|$)(.*)
             pathType: Prefix
             backend:
               service:
-                name: starter-app-service
+                name: k8s-java-app-service
                 port:
                   number: 80
 

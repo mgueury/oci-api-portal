@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-export OCI_STARTER_CREATION_DATE=2023-06-02-14-37-41-142417
+export OCI_STARTER_CREATION_DATE=2023-06-05-06-55-46-968959
 export OCI_STARTER_VERSION=1.5
 
 # Env Variables
@@ -26,8 +26,6 @@ else
   export TF_VAR_vcn_ocid="__TO_FILL__"
   export TF_VAR_public_subnet_ocid="__TO_FILL__"
   export TF_VAR_private_subnet_ocid="__TO_FILL__"
-  export TF_VAR_bastion_ocid="__TO_FILL__"
-  export TF_VAR_atp_ocid="__TO_FILL__"
   export TF_VAR_oke_ocid="__TO_FILL__"
 
   # API Management

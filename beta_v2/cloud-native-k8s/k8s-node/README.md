@@ -23,7 +23,6 @@ export TF_VAR_auth_token="__TO_FILL__"
 export TF_VAR_vcn_ocid="__TO_FILL__"
 export TF_VAR_public_subnet_ocid="__TO_FILL__"
 export TF_VAR_private_subnet_ocid="__TO_FILL__"
-export TF_VAR_bastion_ocid="__TO_FILL__"
 export TF_VAR_oke_ocid="__TO_FILL__"
 ```
 
