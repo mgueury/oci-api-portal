@@ -68,11 +68,21 @@ else
   append "export TF_VAR_compartment_ocid=$TF_VAR_compartment_ocid"
 fi
 
+cat >> ../../../group_common_env.sh <<'EOT' 
+
+# API Management
+EOT
+
 if [ -z "$APIM_HOST" ]; then
   append "# export APIM_HOST=xxxx-xxx.adb.region.oraclecloudapps.com"
 else
   append "export APIM_HOST=$APIM_HOST"
 fi
+if [ -z "$TF_VAR_instance_shape" ]; then
+  append "# export TF_VAR_instance_shape=VM.Standard.E3.Flex"
+else
+  append "export TF_VAR_instance_shape=$TF_VAR_instance_shape"
+fi   
 
 cat >> ../../../group_common_env.sh <<EOT 
 
@@ -122,5 +132,3 @@ EOT
 echo
 echo "File group_common_env.sh created."
 echo
-
-

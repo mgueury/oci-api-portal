@@ -38,9 +38,14 @@ if [ "$TF_VAR_language" == "java" ]; then
     if [ "$TF_VAR_java_version" == 8 ]; then
       sudo dnf install -y java-1.8.0-openjdk
     elif [ "$TF_VAR_java_version" == 11 ]; then
-      sudo dnf install -y jdk-11  
+      sudo dnf install -y java-11  
     elif [ "$TF_VAR_java_version" == 17 ]; then
-      sudo dnf install -y jdk-17  
+      sudo dnf install -y java-17  
+      # Trick to find the path
+      # cd -P "/usr/java/latest"
+      # export JAVA_LATEST_PATH=`pwd`
+      # cd -
+      # sudo update-alternatives --set java $JAVA_LATEST_PATH/bin/java
     fi
   fi
 
@@ -100,7 +105,7 @@ sudo cp nginx_app.locations /etc/nginx/conf.d/.
 if grep -q nginx_app /etc/nginx/nginx.conf; then
   echo "Include nginx_app.locations is already there"
 else
-    echo "Include nginx_app.locations not found"
+    echo "Adding nginx_app.locations"
     sudo awk -i inplace '/404.html/ && !x {print "        include conf.d/nginx_app.locations;"; x=1} 1' /etc/nginx/nginx.conf
 fi
 
