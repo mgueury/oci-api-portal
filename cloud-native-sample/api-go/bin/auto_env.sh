@@ -35,7 +35,7 @@ if declare -p | grep -q "__TO_FILL__"; then
   echo
   echo "Edit the file env.sh. Some variables needs to be filled:" 
   cat env.sh | grep __TO_FILL__
-  exit
+  exit 1
 fi  
 
 if ! command -v jq &> /dev/null; then

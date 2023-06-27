@@ -34,7 +34,7 @@ if [ ! -f $ROOT_DIR/../group_common_env.sh ]; then
     echo
     echo "Edit the file env.sh. Some variables needs to be filled:" 
     echo `cat env.sh | grep __TO_FILL__` 
-    exit
+    exit 1
   fi
 fi  
 
