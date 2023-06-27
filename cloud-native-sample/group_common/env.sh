@@ -15,7 +15,10 @@ elif [ -f $HOME/.oci_starter_profile ]; then
 else
   # export TF_VAR_compartment_ocid=ocid1.compartment.xxxxx
   # TF_VAR_license_model : BRING_YOUR_OWN_LICENSE or LICENSE_INCLUDED
-  export TF_VAR_license_model="LICENSE_INCLUDED"
+  export TF_VAR_compartment_ocid=__TO_FILL__
+  # TF_VAR_license_model : BRING_YOUR_OWN_LICENSE or LICENSE_INCLUDED
+  # export TF_VAR_license_model=BRING_YOUR_OWN_LICENSE
+  export APIM_HOST=__TO_FILL__
 
   # API Management
   # export APIM_HOST=xxxx-xxx.adb.region.oraclecloudapps.com
