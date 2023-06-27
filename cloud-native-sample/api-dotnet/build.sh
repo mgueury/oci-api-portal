@@ -5,3 +5,4 @@ export TARGET_DIR=$ROOT_DIR/target
 cd $ROOT_DIR
 mkdir -p $TARGET_DIR
 bin/build_all.sh $@ 2>&1 | tee $TARGET_DIR/build.log
+exit_on_error
