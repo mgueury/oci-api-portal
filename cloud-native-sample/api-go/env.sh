@@ -1,12 +1,12 @@
 #!/bin/bash
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-export OCI_STARTER_CREATION_DATE=2023-06-27-08-51-15-120146
+export OCI_STARTER_CREATION_DATE=2023-06-27-09-24-00-146735
 export OCI_STARTER_VERSION=1.5
 
 # Env Variables
 export TF_VAR_prefix="api-go"
 
-export TF_VAR_ui_strategy="html"
+export TF_VAR_ui_strategy="none"
 export TF_VAR_db_strategy="none"
 export TF_VAR_deploy_strategy="compute"
 export TF_VAR_language="go"

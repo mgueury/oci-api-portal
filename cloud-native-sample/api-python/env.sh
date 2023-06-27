@@ -1,12 +1,12 @@
 #!/bin/bash
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-export OCI_STARTER_CREATION_DATE=2023-06-27-08-51-42-689165
+export OCI_STARTER_CREATION_DATE=2023-06-27-09-24-00-607210
 export OCI_STARTER_VERSION=1.5
 
 # Env Variables
 export TF_VAR_prefix="api-python"
 
-export TF_VAR_ui_strategy="html"
+export TF_VAR_ui_strategy="none"
 export TF_VAR_db_strategy="none"
 export TF_VAR_deploy_strategy="compute"
 export TF_VAR_language="python"

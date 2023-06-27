@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-export OCI_STARTER_CREATION_DATE=2023-06-27-08-49-00-465425
+export OCI_STARTER_CREATION_DATE=2023-06-27-09-23-59-199267
 export OCI_STARTER_VERSION=1.5
 
 # Env Variables
@@ -14,12 +14,11 @@ elif [ -f $HOME/.oci_starter_profile ]; then
   . $HOME/.oci_starter_profile
 else
   # export TF_VAR_compartment_ocid=ocid1.compartment.xxxxx
-  export TF_VAR_compartment_ocid=__TO_FILL__
-  export APIM_HOST=__TO_FILL__  
-  # export TF_VAR_instance_shape=VM.Standard.E3.Flex
-
   # TF_VAR_license_model : BRING_YOUR_OWN_LICENSE or LICENSE_INCLUDED
-  # export TF_VAR_license_model=BRING_YOUR_OWN_LICENSE
+  export TF_VAR_license_model="LICENSE_INCLUDED"
+
+  # API Management
+  # export APIM_HOST=xxxx-xxx.adb.region.oraclecloudapps.com
 
   # Landing Zone
   # export TF_VAR_lz_appdev_cmp_ocid=$TF_VAR_compartment_ocid
