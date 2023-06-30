@@ -1,4 +1,16 @@
 ### Commmon functions
+title() {
+  line='-------------------------------------------------------------------------'
+  NAME=$1
+  echo
+  echo "-- $NAME ${line:${#NAME}} ($SECONDS secs)"
+  echo  
+}
+
+# Used in for loop for APP_DIR
+app_dir_list() {
+  ls -d $ROOT_DIR/src/app* | sort -g | sed "s/.*src\///g"
+}
 
 # Java Build Common
 java_build_common() {

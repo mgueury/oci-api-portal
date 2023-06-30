@@ -47,8 +47,7 @@ if [ ! -z "$UI_URL" ]; then
   if [ "$TF_VAR_ui_strategy" != "api" ]; then
     echo - User Interface  : $UI_URL/
   fi  
-  for d in `ls -d $ROOT_DIR/src/app* | sort -g`; do
-    export APP_DIR=`echo $d | sed -E "s/(.*)\///"`
+  for APP_DIR in `app_dir_list`; do
     echo - Rest DB API     : $UI_URL/$APP_DIR/dept
     echo - Rest Info API   : $UI_URL/$APP_DIR/info
   done
