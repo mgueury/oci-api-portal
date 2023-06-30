@@ -12,5 +12,5 @@ export TF_VAR_java_vm=##TF_VAR_java_vm##
 if [ "$TF_VAR_java_vm" == "graalvm-native" ]; then
   ./demo > app.log 2>&1 
 else  
-  java --server.port=8082 -jar demo-0.0.1-SNAPSHOT.jar > app.log 2>&1 
+  java -Dserver.port=8082 -jar demo-0.0.1-SNAPSHOT.jar > app.log 2>&1 
 fi

@@ -4,6 +4,7 @@ if [[ -z "${ROOT_DIR}" ]]; then
   exit
 fi
 cd $ROOT_DIR
+SECONDS=0
 
 # Build all
 # Generate sshkeys if not part of a Common Resources project 
@@ -60,4 +61,5 @@ fi
 bin/add_api.sh
 
 bin/done.sh
+echo "Build time: ${SECOND} secs`
 

@@ -4,6 +4,7 @@ if [[ -z "${ROOT_DIR}" ]]; then
   exit
 fi
 cd $ROOT_DIR
+SECONDS=0
 
 # Call the script with --auto-approve to destroy without prompt
 
@@ -32,3 +33,4 @@ elif [ "$TF_VAR_deploy_strategy" == "function" ]; then
 fi
 
 src/terraform/destroy.sh --auto-approve -no-color
+echo "Destroy time: ${SECOND} secs`
