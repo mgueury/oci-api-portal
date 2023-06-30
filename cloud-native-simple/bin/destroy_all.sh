@@ -33,4 +33,4 @@ elif [ "$TF_VAR_deploy_strategy" == "function" ]; then
 fi
 
 src/terraform/destroy.sh --auto-approve -no-color
-echo "Destroy time: ${SECOND} secs`
+echo "Destroy time: ${SECOND} secs"
