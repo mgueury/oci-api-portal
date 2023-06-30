@@ -4,7 +4,7 @@ export OCI_STARTER_CREATION_DATE=2023-06-30-12-19-30-241801
 export OCI_STARTER_VERSION=1.5
 
 # Env Variables
-export TF_VAR_prefix="starter"
+export TF_VAR_prefix="app"
 
 export TF_VAR_java_framework="springboot"
 export TF_VAR_java_vm="jdk"
@@ -22,10 +22,11 @@ elif [ -f $HOME/.oci_starter_profile ]; then
 else
   # export TF_VAR_compartment_ocid=ocid1.compartment.xxxxx
   # TF_VAR_license_model : BRING_YOUR_OWN_LICENSE or LICENSE_INCLUDED
-  export TF_VAR_license_model="LICENSE_INCLUDED"
+  # export TF_VAR_license_model="LICENSE_INCLUDED"
 
   # API Management
-  # export APIM_HOST=xxxx-xxx.adb.region.oraclecloudapps.com
+  export APIM_HOST="__TO_FILL__"
+  # ex: xxxx-xxx.adb.region.oraclecloudapps.com
 
   # Landing Zone
   # export TF_VAR_lz_appdev_cmp_ocid=$TF_VAR_compartment_ocid
