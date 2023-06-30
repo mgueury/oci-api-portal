@@ -61,5 +61,5 @@ fi
 bin/add_api.sh
 
 bin/done.sh
-echo "Build time: ${SECOND} secs"
+echo "Build time: ${SECONDS} secs"
 
