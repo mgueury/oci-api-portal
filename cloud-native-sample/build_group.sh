@@ -7,6 +7,7 @@ cd group_common
 ./build.sh
 exit_on_error
 cd $SCRIPT_DIR
+SECONDS=0
 
 for d in `ls -d */ | sort -g`; do
     if [ "$d" != "group_common/" ]; then
@@ -18,3 +19,5 @@ for d in `ls -d */ | sort -g`; do
       cd $SCRIPT_DIR
     fi
 done
+
+echo "Build time: ${SECONDS} secs"
