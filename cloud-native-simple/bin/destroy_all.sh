@@ -8,9 +8,10 @@ SECONDS=0
 
 # Call the script with --auto-approve to destroy without prompt
 
-echo "WARNING"
+. $ROOT_DIR/bin/shared_bash_function.sh
+title "OCI Starter - Destroy"
 echo 
-echo "This will destroy all the resources created by Terraform."
+echo "Warning: This will destroy all the resources created by Terraform."
 echo 
 if [ "$1" != "--auto-approve" ]; then
   read -p "Do you want to proceed? (yes/no) " yn

@@ -6,6 +6,9 @@ fi
 cd $ROOT_DIR
 SECONDS=0
 
+. $ROOT_DIR/bin/shared_bash_function.sh
+title "OCI Starter - Build"
+
 # Build all
 # Generate sshkeys if not part of a Common Resources project 
 if [ "$TF_VAR_ssh_private_path" == "" ]; then
