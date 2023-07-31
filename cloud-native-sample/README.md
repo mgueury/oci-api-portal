@@ -1,23 +1,31 @@
-## OCI-Starter
+## OCI-Starter - Common Resources
 ### Usage 
 
 ### Commands
-- build.sh      : Build the whole program: Run Terraform, Configure the DB, Build the App, Build the UI
-- destroy.sh    : Destroy the objects created by Terraform
-- env.sh        : Contains the settings of your project
+- build_group.sh   : Build first the Common Resources (group_common), then other directories
+- destroy_group.sh : Destroy other directories, then the Common Resources
+
+- group_common
+    - build.sh     : Create the Common Resources using Terraform
+    - destroy.sh   : Destroy the objects created by Terraform
+    - env.sh       : Contains the settings of the project
 
 ### Directories
-- src           : Sources files
-    - app       : Source of the Backend Application (Command: build_app.sh)
-    - ui        : Source of the User Interface (Command: build_ui.sh)
-    - db        : SQL files of the database
-    - terraform : Terraform scripts (Command: plan.sh / apply.sh)
-    - compute   : Contains the deployment files to Compute
+- group_common/src : Sources files
+    - terraform    : Terraform scripts (Command: plan.sh / apply.sh)
+
+### After Build
+- group_common_env.sh : File created during the build.sh and imported in each application
+- app1                : Directory with an application using "group_common_env.sh" 
+- app2                : ...
+...
+    
 
 Help (Tutorial + How to customize): https://www.ocistarter.com/help
 
 ### Next Steps:
 
 - Run:
-  cd starter
-  ./build.sh
+  # Build first the group common resources (group_common), then other directories
+  cd api
+  ./build_group.sh
