@@ -20,7 +20,7 @@ begin
 wwv_flow_imp.import_begin (
  p_version_yyyy_mm_dd=>'2023.04.28'
 ,p_release=>'23.1.0'
-,p_default_workspace_id=>9968178802046287
+,p_default_workspace_id=>7192959825054340
 ,p_default_application_id=>100
 ,p_default_id_offset=>7349372519640022
 ,p_default_owner=>'API'
@@ -33,7 +33,7 @@ prompt APPLICATION 100 - API Management
 -- Application Export:
 --   Application:     100
 --   Name:            API Management
---   Date and Time:   11:54 Monday June 5, 2023
+--   Date and Time:   06:03 Tuesday August 1, 2023
 --   Exported By:     API
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -73,7 +73,7 @@ prompt APPLICATION 100 - API Management
 --     Supporting Objects:  Included
 --       Install scripts:          2
 --   Version:         23.1.0
---   Instance ID:     7348022161518728
+--   Instance ID:     7192722337562166
 --
 
 prompt --application/delete_application
