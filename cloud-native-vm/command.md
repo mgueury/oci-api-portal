@@ -40,13 +40,13 @@ rm api-java/src/compute/nginx_app.locations
 rm api-node/src/compute/nginx_app.locations
 rm api-python/src/compute/nginx_app.locations
 
-sed -i -e 's/8080/8082/g' api-dotnet/src/app-dotnet/src/appsettings.json
-sed -i -e 's/8080/8081/g' api-go/src/app-go/src/rest.go
-sed -i -e 's/8080/8083/g' api-node/src/app-node/src/rest.js
-sed -i -e 's/8080/8084/g' api-python/src/app-python/src/rest.py
+sed -i '' 's/8080/8082/g' api-dotnet/src/app-dotnet/src/appsettings.json
+sed -i '' 's/8080/8081/g' api-go/src/app-go/src/rest.go
+sed -i '' 's/8080/8083/g' api-node/src/app-node/src/rest.js
+sed -i '' 's/8080/8084/g' api-python/src/app-python/src/rest.py
 
-sed -i -e 's#/app/#/app-java/#g' api-java/src/app-java/openapi_spec.yaml
-sed -i -e 's#/app/#/app-dotnet/#g' api-dotnet/src/app-dotnet/openapi_spec.yaml
-sed -i -e 's#/app/#/app-go/#g' api-go/src/app-go/openapi_spec.yaml
-sed -i -e 's#/app/#/app-node/#g' api-node/src/app-node/openapi_spec.yaml
-sed -i -e 's#/app/#/app-python/#g' api-python/src/app-python/openapi_spec.yaml
+sed -i '' 's#/app/#/app-java/#g' api-java/src/app-java/openapi_spec.yaml
+sed -i '' 's#/app/#/app-dotnet/#g' api-dotnet/src/app-dotnet/openapi_spec.yaml
+sed -i '' 's#/app/#/app-go/#g' api-go/src/app-go/openapi_spec.yaml
+sed -i '' 's#/app/#/app-node/#g' api-node/src/app-node/openapi_spec.yaml
+sed -i '' 's#/app/#/app-python/#g' api-python/src/app-python/openapi_spec.yaml
