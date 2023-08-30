@@ -12,19 +12,19 @@ mv api/* .
 rm *.zip
 
 mv api-dotnet/src/app api-node/src/app-dotnet
-mv api-go/src/app api-node/src/app-go
+mv api-go/src/app api-go/src/app-go
 mv api-java/src/app api-java/src/app-java
 mv api-node/src/app api-node/src/app-node
-mv api-python/src/app api-node/src/app-python
+mv api-python/src/app api-python/src/app-python
 
 cat > api-dotnet/src/compute/nginx_app.locations <<'EOT' 
-  location /app-dotnet/ { 
+  location /app-java/ { 
     proxy_pass http://localhost:8080/; 
   } 
   location /app-go/ { 
     proxy_pass http://localhost:8081/; 
   } 
-  location /app-java/ { 
+  location /app-dotnet/ { 
     proxy_pass http://localhost:8082/; 
   } 
   location /app-node/ { 
@@ -39,5 +39,10 @@ rm api-go/src/compute/nginx_app.locations
 rm api-java/src/compute/nginx_app.locations
 rm api-node/src/compute/nginx_app.locations
 rm api-python/src/compute/nginx_app.locations
+
+sed -i -e 's/8080/8082/g' api-dotnet/src/app-dotnet/src/appsettings.json
+sed -i -e 's/8080/8081/g' api-go/src/app-go/src/rest.go
+sed -i -e 's/8080/8083/g' api-node/src/app-node/src/rest.js
+sed -i -e 's/8080/8084/g' api-python/src/app-python/src/rest.py
 
 

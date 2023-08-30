@@ -1,10 +1,10 @@
-  location /app-dotnet/ { 
+  location /app-java/ { 
     proxy_pass http://localhost:8080/; 
   } 
   location /app-go/ { 
     proxy_pass http://localhost:8081/; 
   } 
-  location /app-java/ { 
+  location /app-dotnet/ { 
     proxy_pass http://localhost:8082/; 
   } 
   location /app-node/ { 
