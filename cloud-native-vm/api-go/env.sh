@@ -1,13 +1,13 @@
 #!/bin/bash
 PROJECT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export BIN_DIR=$PROJECT_DIR/bin
-export OCI_STARTER_CREATION_DATE=2023-08-30-16-37-15-298518
+export OCI_STARTER_CREATION_DATE=2023-08-30-19-43-34-499791
 export OCI_STARTER_VERSION=1.5
 
 # Env Variables
 export TF_VAR_prefix="api-go"
 
-export TF_VAR_ui_strategy="none"
+export TF_VAR_ui_strategy="api"
 export TF_VAR_db_strategy="none"
 export TF_VAR_output_dir="output"
 export TF_VAR_deploy_strategy="compute"

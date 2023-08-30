@@ -1,8 +1,8 @@
-curl -k "https://www.ocistarter.com/app/zip?prefix=api-java&group_name=api&group_common=apigw,compute&deploy=compute&ui=none&language=java&database=none" --output api.zip
-curl -k "https://www.ocistarter.com/app/zip?prefix=api-node&group_common=apigw,compute&deploy=compute&ui=none&language=node&database=none" --output api-node.zip
-curl -k "https://www.ocistarter.com/app/zip?prefix=api-go&group_common=apigw,compute&deploy=compute&ui=none&language=go&database=none" --output api-go.zip
-curl -k "https://www.ocistarter.com/app/zip?prefix=api-python&group_common=apigw,compute&deploy=compute&ui=none&language=python&database=none" --output api-python.zip
-curl -k "https://www.ocistarter.com/app/zip?prefix=api-dotnet&group_common=apigw,compute&deploy=compute&ui=none&language=dotnet&database=none" --output api-dotnet.zip
+curl -k "https://www.ocistarter.com/app/zip?prefix=api-java&group_name=api&group_common=apigw,compute&deploy=compute&ui=api&language=java&database=none" --output api.zip
+curl -k "https://www.ocistarter.com/app/zip?prefix=api-node&group_common=apigw,compute&deploy=compute&ui=api&language=node&database=none" --output api-node.zip
+curl -k "https://www.ocistarter.com/app/zip?prefix=api-go&group_common=apigw,compute&deploy=compute&ui=api&language=go&database=none" --output api-go.zip
+curl -k "https://www.ocistarter.com/app/zip?prefix=api-python&group_common=apigw,compute&deploy=compute&ui=api&language=python&database=none" --output api-python.zip
+curl -k "https://www.ocistarter.com/app/zip?prefix=api-dotnet&group_common=apigw,compute&deploy=compute&ui=api&language=dotnet&database=none" --output api-dotnet.zip
 unzip api.zip
 unzip api-node.zip
 unzip api-go.zip
@@ -11,7 +11,7 @@ unzip api-dotnet.zip
 mv api/* .
 rm *.zip
 
-mv api-dotnet/src/app api-node/src/app-dotnet
+mv api-dotnet/src/app api-dotnet/src/app-dotnet
 mv api-go/src/app api-go/src/app-go
 mv api-java/src/app api-java/src/app-java
 mv api-node/src/app api-node/src/app-node
@@ -45,8 +45,8 @@ sed -i -e 's/8080/8081/g' api-go/src/app-go/src/rest.go
 sed -i -e 's/8080/8083/g' api-node/src/app-node/src/rest.js
 sed -i -e 's/8080/8084/g' api-python/src/app-python/src/rest.py
 
-sed -i -e 's#/app/#/app-java/#/g' api-java/src/app-java/src/openapi_spec.yaml
-sed -i -e 's#/app/#/app-dotnet/#/g' api-dotnet/src/app-dotnet/src/openapi_spec.yaml
-sed -i -e 's#/app/#/app-go/#/g' api-go/src/app-go/src/openapi_spec.yaml
-sed -i -e 's#/app/#/app-node/#/g' api-node/src/app-node/src/openapi_spec.yaml
-sed -i -e 's#/app/#/app-python/#/g' api-python/src/app-python/src/openapi_spec.yaml
+sed -i -e 's#/app/#/app-java/#g' api-java/src/app-java/openapi_spec.yaml
+sed -i -e 's#/app/#/app-dotnet/#g' api-dotnet/src/app-dotnet/openapi_spec.yaml
+sed -i -e 's#/app/#/app-go/#g' api-go/src/app-go/openapi_spec.yaml
+sed -i -e 's#/app/#/app-node/#g' api-node/src/app-node/openapi_spec.yaml
+sed -i -e 's#/app/#/app-python/#g' api-python/src/app-python/openapi_spec.yaml
