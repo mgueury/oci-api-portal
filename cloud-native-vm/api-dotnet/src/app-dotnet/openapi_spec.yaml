@@ -3,7 +3,7 @@ info:
   title: Dept API
   version: 1.0.0
 paths:
-  /app/dept:
+  /app-dotnet/dept:
     get:
       summary: Rest DB API
       operationId: dept
@@ -27,7 +27,7 @@ paths:
                     loc:
                       type: string
                       description: Location 
-  /app/info:
+  /app-dotnet/info:
     get:
       summary: Rest Info API
       responses:

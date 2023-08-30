@@ -45,4 +45,8 @@ sed -i -e 's/8080/8081/g' api-go/src/app-go/src/rest.go
 sed -i -e 's/8080/8083/g' api-node/src/app-node/src/rest.js
 sed -i -e 's/8080/8084/g' api-python/src/app-python/src/rest.py
 
-
+sed -i -e 's#/app/#/app-java/#/g' api-java/src/app-java/src/openapi_spec.yaml
+sed -i -e 's#/app/#/app-dotnet/#/g' api-dotnet/src/app-dotnet/src/openapi_spec.yaml
+sed -i -e 's#/app/#/app-go/#/g' api-go/src/app-go/src/openapi_spec.yaml
+sed -i -e 's#/app/#/app-node/#/g' api-node/src/app-node/src/openapi_spec.yaml
+sed -i -e 's#/app/#/app-python/#/g' api-python/src/app-python/src/openapi_spec.yaml
