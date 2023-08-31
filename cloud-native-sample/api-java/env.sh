@@ -1,6 +1,7 @@
 #!/bin/bash
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-export OCI_STARTER_CREATION_DATE=2023-06-27-09-23-59-206469
+PROJECT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+export BIN_DIR=$PROJECT_DIR/bin
+export OCI_STARTER_CREATION_DATE=2023-08-29-13-28-02-020248
 export OCI_STARTER_VERSION=1.5
 
 # Env Variables
@@ -9,14 +10,16 @@ export TF_VAR_prefix="api-java"
 export TF_VAR_java_framework="springboot"
 export TF_VAR_java_vm="jdk"
 export TF_VAR_java_version="17"
-export TF_VAR_ui_strategy="none"
+export TF_VAR_ui_strategy="api"
 export TF_VAR_db_strategy="none"
 export TF_VAR_deploy_strategy="compute"
 export TF_VAR_language="java"
 export TF_VAR_db_user=""
 
-if [ -f $SCRIPT_DIR/../group_common_env.sh ]; then
-  . $SCRIPT_DIR/../group_common_env.sh
+if [ -f $PROJECT_DIR/../group_common_env.sh ]; then
+  . $PROJECT_DIR/../group_common_env.sh
+elif [ -f $PROJECT_DIR/../../group_common_env.sh ]; then
+  . $PROJECT_DIR/../../group_common_env.sh
 elif [ -f $HOME/.oci_starter_profile ]; then
   . $HOME/.oci_starter_profile
 else
@@ -39,4 +42,4 @@ else
 fi
 
 # Get other env variables automatically (-silent flag can be passed)
-. $SCRIPT_DIR/bin/auto_env.sh $1
+. $BIN_DIR/auto_env.sh $1
