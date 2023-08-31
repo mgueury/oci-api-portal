@@ -5,6 +5,7 @@ export OCI_STARTER_VERSION=1.5
 
 # Env Variables
 export TF_VAR_prefix="k8s"
+export TF_VAR_group_name="k8s"
 
 export TF_VAR_group_common="oke"
 
