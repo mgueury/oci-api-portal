@@ -1,7 +1,7 @@
 #!/bin/bash
 PROJECT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export BIN_DIR=$PROJECT_DIR/bin
-export OCI_STARTER_CREATION_DATE=2023-09-08-07-57-52-563926
+export OCI_STARTER_CREATION_DATE=2023-09-08-11-26-47-351261
 export OCI_STARTER_VERSION=1.5
 
 # Env Variables
