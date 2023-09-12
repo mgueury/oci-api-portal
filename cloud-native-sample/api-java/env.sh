@@ -1,7 +1,7 @@
 #!/bin/bash
 PROJECT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export BIN_DIR=$PROJECT_DIR/bin
-export OCI_STARTER_CREATION_DATE=2023-08-29-13-28-02-020248
+export OCI_STARTER_CREATION_DATE=2023-09-08-11-26-45-573635
 export OCI_STARTER_VERSION=1.5
 
 # Env Variables
@@ -12,6 +12,7 @@ export TF_VAR_java_vm="jdk"
 export TF_VAR_java_version="17"
 export TF_VAR_ui_strategy="api"
 export TF_VAR_db_strategy="none"
+export TF_VAR_output_dir="output"
 export TF_VAR_deploy_strategy="compute"
 export TF_VAR_language="java"
 export TF_VAR_db_user=""

@@ -1,7 +1,7 @@
 #!/bin/bash
 PROJECT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export BIN_DIR=$PROJECT_DIR/bin
-export OCI_STARTER_CREATION_DATE=2023-08-29-13-28-03-584615
+export OCI_STARTER_CREATION_DATE=2023-09-08-11-26-46-911972
 export OCI_STARTER_VERSION=1.5
 
 # Env Variables
@@ -9,6 +9,7 @@ export TF_VAR_prefix="api-python"
 
 export TF_VAR_ui_strategy="api"
 export TF_VAR_db_strategy="none"
+export TF_VAR_output_dir="output"
 export TF_VAR_deploy_strategy="compute"
 export TF_VAR_language="python"
 export TF_VAR_db_user=""

@@ -10,4 +10,4 @@ unzip api-python.zip
 unzip api-dotnet.zip
 mv api/* .
 rm *.zip
-
+rmdir api
