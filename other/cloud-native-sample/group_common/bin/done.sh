@@ -51,7 +51,7 @@ if [ ! -z "$UI_URL" ]; then
   fi  
   for APP_DIR in `app_dir_list`; do
     if [ -f  $PROJECT_DIR/src/$APP_DIR/openapi_spec.yaml ]; then
-      python3 $BIN_DIR/openapi_list.py $PROJECT_DIR/src/$APP_DIR/openapi_spec.yaml $UI_URL
+      grep "^[[:space:]]*/.*:" $PROJECT_DIR/src/$APP_DIR/openapi_spec.yaml | sed "s#[[:space:]]*##" | sed "s/://"
     fi  
     # echo - Rest DB API     : $UI_URL/$APP_DIR/dept
     # echo - Rest Info API   : $UI_URL/$APP_DIR/info
